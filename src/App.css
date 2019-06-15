@@ -31,3 +31,8 @@
     transform: rotate(360deg);
   }
 }
+
+.App-title {
+  font-family: "Lucida Grande", sans-serif;
+  color: #61dafb;
+}
