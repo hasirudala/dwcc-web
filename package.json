@@ -14,7 +14,8 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "redux-form": "^8.2.4",
-    "redux-saga": "0.16"
+    "redux-saga": "0.16",
+    "typescript": "^3.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,6 +40,6 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "redux-saga-test-plan": "^4.0.0-beta.3"
+    "redux-saga-test-plan": "3.7"
   }
 }
