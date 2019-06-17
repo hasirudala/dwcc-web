@@ -1,0 +1,27 @@
+version: 2.1
+jobs:
+  test:
+    docker:
+      - image: circleci/node:10.15.1
+
+    working_directory: ~/dwcc-web
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+
+      - run: yarn install
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+
+      - run: yarn test
+
+workflows:
+  test:
+    jobs:
+      - test
