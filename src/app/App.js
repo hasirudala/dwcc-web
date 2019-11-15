@@ -7,18 +7,8 @@ import Routes from './routes'
 
 function Login(props) {
     const { signIn } = useContext(AuthContext)
-    const afterSignIn = (user) => {
-        fetch("/api/yolo", {
-            headers: {
-                "Authorization": `Bearer ${user.getAuthResponse().id_token}`
-            }
-        })
-        .then(data => data.text())
-        .then(alert)
-        .catch(console.error)
-    }
     return (
-        <button onClick={() => signIn(afterSignIn)}>Sign In</button>
+        <button onClick={ signIn }>Sign In</button>
     )
 }
 

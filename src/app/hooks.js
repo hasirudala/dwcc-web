@@ -1,21 +1,41 @@
 import { useState, useEffect } from 'react'
 import isNil from "lodash.isnil"
 
-import { googleIdentityClientId } from "../common/constants"
+import { googleIdentityClientId, allowedHostedDomain } from "../common/constants"
 
+const checkAuthorization = (idToken) =>
+    fetch("/api/checkAuthorization", {
+        headers: {
+            "Authorization": `Bearer ${idToken}`
+        }
+    })
+
+const handleNonOk = response => {
+    if (response.status === 403)
+        throw Error("You do not have permissions to access this application. " +
+            "Contact your organisation's administrator")
+    else if (!response.ok)
+        throw Error("Unable to validate credentials")
+    return response
+}
 
 export default function useAuth() {
     const [googleAuthApi, setGoogleAuthApi] = useState(null)
     const [isSignedIn, setSignedIn] = useState(false)
 
-    function signIn(onSuccessCb) {
+    const signIn = () => {
         googleAuthApi.signIn().then(user => {
-            onSuccessCb(user)
-            setSignedIn(true)
+            checkAuthorization(user.getAuthResponse().id_token)
+            .then(handleNonOk)
+            .then(() => setSignedIn(true))
+            .catch(e => {
+                googleAuthApi.signOut()
+                alert(e)
+            })
         })
     }
 
-    function signOut() {
+    const signOut = () => {
         googleAuthApi.signOut().then(() => setSignedIn(false))
     }
 
@@ -27,6 +47,7 @@ export default function useAuth() {
                 .auth2
                 .init({
                     client_id: googleIdentityClientId,
+                    hosted_domain: allowedHostedDomain
                 })
                 .then(auth => {
                     setGoogleAuthApi(auth)
