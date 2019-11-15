@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 
 import { store } from './store';
-import { ErrorBoundary } from "./bugsnag";
+import { ErrorBoundary } from "./common/bugsnag";
 
 
 ReactDOM.render(

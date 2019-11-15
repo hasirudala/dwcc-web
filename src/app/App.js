@@ -1,16 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import './App.css'
 import useAuth from './hooks'
-import { AuthContext } from "../common/AuthContext"
+import { AuthContext } from '../common/AuthContext'
 import Routes from './routes'
-
-function Login(props) {
-    const { signIn } = useContext(AuthContext)
-    return (
-        <button onClick={ signIn }>Sign In</button>
-    )
-}
+import LandingPage from './LandingPage'
 
 function App() {
     const authState = useAuth()
@@ -20,7 +14,7 @@ function App() {
                 authState.isSignedIn ?
                     <Routes />
                     :
-                    <Login />
+                    <LandingPage />
             }
         </AuthContext.Provider>
     )
