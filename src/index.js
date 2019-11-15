@@ -1,21 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './app/App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from "react-router-dom";
 
 import { store } from './store';
 import { ErrorBoundary } from "./bugsnag";
 
 
 ReactDOM.render(
-  <ErrorBoundary>
-    <Provider store={store}>
-      <App/>
-    </Provider>
-  </ErrorBoundary>
-  , document.getElementById('root')
+    <ErrorBoundary>
+        <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>
+    </ErrorBoundary>
+    , document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

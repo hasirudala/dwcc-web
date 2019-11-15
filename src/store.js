@@ -4,7 +4,7 @@ import { formMiddleware } from 'react-admin';
 import { routerMiddleware } from 'react-router-redux';
 import { createHashHistory } from 'history';
 
-import { isDevEnv } from "./constants";
+import { isDevEnv } from "./common/constants";
 import rootReducer from "./rootReducer";
 import rootSaga from "./rootSaga";
 

@@ -2,9 +2,11 @@
   "name": "dwcc-web",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:6021",
   "dependencies": {
     "@bugsnag/js": "^6.3.0",
     "@bugsnag/plugin-react": "^6.2.0",
+    "lodash.isnil": "^4.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-admin": "^2.9.2",
