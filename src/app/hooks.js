@@ -41,7 +41,7 @@ export default function useAuth() {
 
     useEffect(() => {
         if (isNil(googleAuthApi)) {
-            window.gapi.load('auth2', () => {
+            window.gapi && window.gapi.load('auth2', () => {
                 window
                 .gapi
                 .auth2
