@@ -3,7 +3,7 @@ import React from 'react'
 import './App.css'
 import useAuth from './hooks'
 import { AuthContext } from '../common/AuthContext'
-import Routes from './routes'
+import Routes from './Routes'
 import LandingPage from './LandingPage'
 
 function App() {

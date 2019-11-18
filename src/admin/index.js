@@ -1,4 +1,6 @@
-import { authProvider } from './authProvider';
-import dataProvider from './dataProvider';
+import authProvider from './adapters/authProvider';
+import dataProvider from './adapters/dataProvider';
+import DwccAdmin from './DwccAdmin'
 
-export { authProvider, dataProvider };
+export default DwccAdmin
+export { authProvider, dataProvider }

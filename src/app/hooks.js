@@ -11,7 +11,7 @@ const checkAuthorization = (idToken) =>
     })
 
 const handleNonOk = response => {
-    if (response.status === 403)
+    if (response.status === 401 || response.status === 403)
         throw Error("You do not have permissions to access this application. " +
             "Contact your organisation's administrator")
     else if (!response.ok)

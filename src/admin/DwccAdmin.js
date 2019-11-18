@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 import { Admin } from "react-admin";
-import { authProvider } from "./authProvider";
+import authProvider from "./adapters/authProvider";
 import { store, adminHistory } from "../store";
 
 

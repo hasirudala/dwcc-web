@@ -9,7 +9,7 @@
     "lodash.isnil": "^4.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
-    "react-admin": "^2.9.2",
+    "react-admin": "^2.9.8",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.1.2",

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Route, Link, Switch } from "react-router-dom"
 
-import DwccAdmin from "../admin/DwccAdmin"
+import DwccAdmin from "../admin"
 import { AuthContext } from "../common/AuthContext"
 
 
