@@ -8,6 +8,7 @@ import LandingPage from './LandingPage'
 
 function App() {
     const authState = useAuth()
+    window.googleAuthApi = authState.googleAuthApi
     return (
         <AuthContext.Provider value={authState}>
             {

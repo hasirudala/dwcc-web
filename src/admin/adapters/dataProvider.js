@@ -28,7 +28,14 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
      */
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = `${apiUrl}/${resource}`;
-        const options = {};
+        const idToken = window.googleAuthApi.currentUser.get().getAuthResponse().id_token;
+        const options = {
+            headers: new Headers({
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${idToken}`
+            })
+        };
         switch (type) {
             case GET_LIST:
                 url = `${url}/${UrlPartsGenerator.forList(params)}`;

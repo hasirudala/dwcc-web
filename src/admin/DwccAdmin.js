@@ -1,9 +1,12 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import { Admin } from "react-admin";
+import { Admin, Resource } from "react-admin";
 import authProvider from "./adapters/authProvider";
 import { store, adminHistory } from "../store";
+import Dashboard from './Dashboard'
+import { UsersList } from "./resources/user"
+import { DwccList } from "./resources/dwcc"
 
 
 export default class DwccAdmin extends React.Component {
@@ -17,7 +20,10 @@ export default class DwccAdmin extends React.Component {
 
     render() {
         return (
-            <Admin title="DWCC Admin" authProvider={authProvider} history={adminHistory} />
+            <Admin dashboard={Dashboard} authProvider={authProvider} history={adminHistory}>
+                <Resource name="users" list={UsersList} />
+                <Resource name="dwcc" list={DwccList} options={{ label: "Dry Waste Centers" }} />
+            </Admin>
         );
     }
 }

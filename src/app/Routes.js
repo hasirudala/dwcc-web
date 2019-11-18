@@ -14,7 +14,7 @@ function Home() {
                 <h6 className="App-title" style={{ fontWeight: 'lighter', marginBottom: "-1.5em" }}>Welcome</h6>
                 <h5 className="App-title">{nameOfUser}</h5>
                 <br />
-                <h3>This app is hatching!</h3>
+                <h1>Under Construction</h1>
                 <br />
                 <Link to="/admin/"><span className="App-link">React Admin</span></Link>
                 <br />
