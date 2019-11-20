@@ -21,10 +21,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "openssl enc -aes-256-cbc -d -in .env.production.enc -out .env.production.local && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy_local": "react-scripts build && rm -rf ../dwcc-server/src/main/resources/static/* && cp -R build/* ../dwcc-server/src/main/resources/static/."
+    "deploy_local": "openssl enc -aes-256-cbc -d -in .env.production.enc -out .env.production.local && react-scripts build && rm -rf ../dwcc-server/src/main/resources/static/* && cp -R build/* ../dwcc-server/src/main/resources/static/."
   },
   "eslintConfig": {
     "extends": "react-app"
