@@ -18,7 +18,9 @@ openssl enc -aes-256-cbc -d -in .env.production.enc -out .env.production -k <PAS
 
 ---
 
-##### Env vars in '.env.production':
+##### Env vars to be set:
 ```
-REACT_APP_BUGSNAG_API_KEY
+REACT_APP_BUGSNAG_API_KEY (omit in dev environment)
+REACT_APP_GOOGLE_IDENTITY_CLIENT_ID
+REACT_APP_GOOGLE_IDENTITY_ALLOWED_HOSTED_DOMAIN
 ```
