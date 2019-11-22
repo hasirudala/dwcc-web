@@ -1,11 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './app/App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 
+import * as serviceWorker from './serviceWorker';
+import App from './app/App';
 import { store } from './store';
 import { ErrorBoundary } from "./common/bugsnag";
 

@@ -2,11 +2,10 @@ import React from 'react'
 import isNil from 'lodash.isnil'
 import axios from 'axios'
 
-import './App.css'
 import useAuth from './hooks'
 import { AuthContext } from '../common/AuthContext'
 import Routes from './Routes'
-import LandingPage from './LandingPage'
+import SignInPage from './SignInPage'
 
 
 const initAxios = googleUser => {
@@ -14,8 +13,10 @@ const initAxios = googleUser => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${googleUser.getAuthResponse().id_token}`
 }
 
+const resetAxios = () => axios.defaults.headers.common['Authorization'] = ''
+
 function App() {
-    const authState = useAuth(initAxios)
+    const authState = useAuth(initAxios, resetAxios)
 
     if(isNil(authState.googleAuthApi)) // another way of saying isInitializing
         return <div className="App-header">Starting...</div>
@@ -28,7 +29,7 @@ function App() {
                 authState.isSignedIn ?
                     <Routes />
                     :
-                    <LandingPage />
+                    <SignInPage />
             }
         </AuthContext.Provider>
     )

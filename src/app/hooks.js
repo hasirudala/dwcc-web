@@ -28,18 +28,18 @@ const handleNonOk = response => {
 
 const fetchUserInfo = (onSuccess) => {
     axios.get('/users/self')
-    .then(onSuccess)
+    .then(({ data }) => onSuccess(data))
     .catch(error => {
         if (error.response) handleNonOk(error.response)
         else throw error
     })
     .catch(error => {
-        console.error(error.message)
+        alert(error.message)
     })
 }
 
 
-export default function useAuth(initAxiosFn) {
+export default function useAuth(initAxiosFn, resetAxiosFn) {
     const [state, setState] = useState({
         googleAuthApi: null,
         isSignedIn: false,
@@ -47,7 +47,7 @@ export default function useAuth(initAxiosFn) {
         axiosInitialized: false
     })
 
-    const googleAuthApi = state.googleAuthApi
+    const gAuthApi = state.googleAuthApi
 
     const setGoogleAuthApi = useCallback(authObj => {
         setState(prevState => ({ ...prevState, googleAuthApi: authObj }))
@@ -55,27 +55,26 @@ export default function useAuth(initAxiosFn) {
 
     const setSignedOut = useCallback(() => {
         setState(prevState => ({ ...prevState, userInfo: {}, isSignedIn: false }))
-    }, [setState])
+        resetAxiosFn()
+    }, [setState, resetAxiosFn])
 
     const setUserInfoAndSignIn = useCallback(userInfo => {
         setState(prevState => ({ ...prevState, userInfo, isSignedIn: true }))
     }, [setState])
 
     const onSuccessfulSignIn = useCallback((gAuthUser, onFetchUserInfo) => {
-        if (!state.axiosInitialized) {
-            initAxiosFn(gAuthUser)
-        }
+        initAxiosFn(gAuthUser)
         fetchUserInfo(onFetchUserInfo)
-    }, [state, initAxiosFn])
+    }, [initAxiosFn])
 
     const signIn = () => {
-        googleAuthApi
+        gAuthApi
         .signIn({ prompt: 'select_account' })
         .then(user => onSuccessfulSignIn(user, setUserInfoAndSignIn))
     }
 
     const signOut = () => {
-        googleAuthApi.signOut().then(setSignedOut)
+        gAuthApi.signOut().then(setSignedOut)
     }
 
     const setStateOnSignIn = useCallback(googleAuthApi =>
@@ -91,10 +90,10 @@ export default function useAuth(initAxiosFn) {
     }, [onSuccessfulSignIn, setStateOnSignIn, setGoogleAuthApi])
 
     useEffect(() => {
-        if (!isNil(window.gapi) && isNil(googleAuthApi)) {
+        if (!isNil(window.gapi) && isNil(gAuthApi)) {
             initAuthApi(onInitAuthApi)
         }
-    }, [googleAuthApi, onInitAuthApi])
+    }, [gAuthApi, onInitAuthApi])
 
     return {
         ...state,

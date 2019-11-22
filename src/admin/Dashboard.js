@@ -7,7 +7,7 @@ import { Title } from 'react-admin';
 export default () => (
     <Card>
         <Title title="DWCC Admin Console" />
-        <CardContent style={{ minHeight: '90vh' }}>
+        <CardContent style={{ minHeight: '90vh', color: '#333' }}>
             <h1>Welcome to the administration area</h1>
             <div>
                 In this section, you can...

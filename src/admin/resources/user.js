@@ -10,17 +10,14 @@ import ActionsWithBackButton from "../components/ActionsWithBackButton"
 
 
 export const UsersList = (props) => (
-    <>
-        <h1>Authorized Users</h1>
-        <List {...props} bulkActions={false}>
-            <Datagrid rowClick={() => false}>
-                <TextField source="email" label="Login/email ID" />
-                <TextField source="name" label="Name of person" />
-                <FunctionField label="Access" render={user => user.isAdmin ? 'Administrator' : 'Staff'} />
-                <EditButton />
-            </Datagrid>
-        </List>
-    </>
+    <List {...props} bulkActions={false}>
+        <Datagrid rowClick={() => false}>
+            <TextField source="email" label="Login/email ID" />
+            <TextField source="name" label="Name of person" />
+            <FunctionField label="Access" render={user => user.isAdmin ? 'Administrator' : 'Staff'} />
+            <EditButton />
+        </Datagrid>
+    </List>
 )
 
 export const CreateUser = props =>

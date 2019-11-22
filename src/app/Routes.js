@@ -6,22 +6,18 @@ import { AuthContext } from "../common/AuthContext"
 
 
 function Home() {
-    const { googleAuthApi, signOut } = useContext(AuthContext)
-    const nameOfUser = googleAuthApi.currentUser.get().getBasicProfile().getName()
+    const { signOut, userInfo } = useContext(AuthContext)
     return (
-        <div className="App">
-            <header className="App-header">
-                <h6 className="App-title" style={{ fontWeight: 'lighter', marginBottom: "-1.5em" }}>Welcome</h6>
-                <h5 className="App-title">{nameOfUser}</h5>
-                <br />
-                <h1>Under Construction</h1>
-                <br />
-                <Link to="/admin/"><span className="App-link">React Admin</span></Link>
-                <br />
-                <Link to="/abc/"><span className="App-link">Another Page</span></Link>
-                <br />
-                <button onClick={signOut}>Sign out</button>
-            </header>
+        <div className="d-flex flex-column justify-content-center align-items-center m-auto w-50 min-vh-100">
+            <h6>Welcome <u>{userInfo.name}</u></h6>
+            <br />
+            <h1>Under Construction</h1>
+            <br />
+            <Link to="/admin/">React Admin</Link>
+            <br />
+            <Link to="/abc/">Another Page</Link>
+            <br />
+            <button onClick={signOut}>Sign out</button>
         </div>
     )
 }
