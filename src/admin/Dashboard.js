@@ -9,7 +9,7 @@ export default () => (
         <Title title="DWCC Admin Console" />
         <CardContent style={{ minHeight: '90vh' }}>
             <h1>Welcome to the administration area</h1>
-            <p>
+            <div>
                 In this section, you can...
                 <ul>
                     <li>Authorize (staff) user accounts from Hasirudala organization to access this app</li>
@@ -17,7 +17,7 @@ export default () => (
                     <li>Create/manage waste categories</li>
                     <li>etc.</li>
                 </ul>
-            </p>
+            </div>
         </CardContent>
     </Card>
 );

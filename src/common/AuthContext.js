@@ -5,6 +5,7 @@ const shape = {
     signIn: () => {},
     signOut: () => {},
     googleAuthApi: {},
+    userInfo: {}
 }
 
 export const AuthContext = React.createContext(shape)

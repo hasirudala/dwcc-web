@@ -1,66 +1,104 @@
-import { useState, useEffect } from 'react'
-import isNil from "lodash.isnil"
+import { useState, useEffect, useCallback } from 'react'
+import isNil from 'lodash.isnil'
+import axios from 'axios'
 
 import { googleIdentityClientId, allowedHostedDomain } from "../common/constants"
 
-const checkAuthorization = (idToken) =>
-    fetch("/api/checkAuthorization", {
-        headers: {
-            "Authorization": `Bearer ${idToken}`
-        }
+
+function initAuthApi(onInit) {
+    window.gapi.load('auth2', () => {
+        window
+        .gapi
+        .auth2
+        .init({
+            client_id: googleIdentityClientId,
+            hosted_domain: allowedHostedDomain
+        })
+        .then(onInit, /* onError */alert)
     })
+}
 
 const handleNonOk = response => {
     if (response.status === 401 || response.status === 403)
         throw Error("You do not have permissions to access this application. " +
             "Contact your organisation's administrator")
-    else if (!response.ok)
-        throw Error("Unable to validate credentials")
-    return response
+    throw Error("Unable to validate credentials")
 }
 
-export default function useAuth() {
-    const [googleAuthApi, setGoogleAuthApi] = useState(null)
-    const [isSignedIn, setSignedIn] = useState(false)
+
+const fetchUserInfo = (onSuccess) => {
+    axios.get('/users/self')
+    .then(onSuccess)
+    .catch(error => {
+        if (error.response) handleNonOk(error.response)
+        else throw error
+    })
+    .catch(error => {
+        console.error(error.message)
+    })
+}
+
+
+export default function useAuth(initAxiosFn) {
+    const [state, setState] = useState({
+        googleAuthApi: null,
+        isSignedIn: false,
+        userInfo: {},
+        axiosInitialized: false
+    })
+
+    const googleAuthApi = state.googleAuthApi
+
+    const setGoogleAuthApi = useCallback(authObj => {
+        setState(prevState => ({ ...prevState, googleAuthApi: authObj }))
+    }, [setState])
+
+    const setSignedOut = useCallback(() => {
+        setState(prevState => ({ ...prevState, userInfo: {}, isSignedIn: false }))
+    }, [setState])
+
+    const setUserInfoAndSignIn = useCallback(userInfo => {
+        setState(prevState => ({ ...prevState, userInfo, isSignedIn: true }))
+    }, [setState])
+
+    const onSuccessfulSignIn = useCallback((gAuthUser, onFetchUserInfo) => {
+        if (!state.axiosInitialized) {
+            initAxiosFn(gAuthUser)
+        }
+        fetchUserInfo(onFetchUserInfo)
+    }, [state, initAxiosFn])
 
     const signIn = () => {
-        googleAuthApi.signIn().then(user => {
-            checkAuthorization(user.getAuthResponse().id_token)
-            .then(handleNonOk)
-            .then(() => setSignedIn(true))
-            .catch(e => {
-                googleAuthApi.signOut()
-                alert(e)
-            })
-        })
+        googleAuthApi
+        .signIn({ prompt: 'select_account' })
+        .then(user => onSuccessfulSignIn(user, setUserInfoAndSignIn))
     }
 
     const signOut = () => {
-        googleAuthApi.signOut().then(() => setSignedIn(false))
+        googleAuthApi.signOut().then(setSignedOut)
     }
 
-    useEffect(() => {
-        if (isNil(googleAuthApi)) {
-            window.gapi && window.gapi.load('auth2', () => {
-                window
-                .gapi
-                .auth2
-                .init({
-                    client_id: googleIdentityClientId,
-                    hosted_domain: allowedHostedDomain
-                })
-                .then(auth => {
-                    setGoogleAuthApi(auth)
-                    if (auth.isSignedIn.get()) setSignedIn(true)
-                })
-            })
+    const setStateOnSignIn = useCallback(googleAuthApi =>
+        userInfo => setState({ googleAuthApi, userInfo, isSignedIn: true, axiosInitialized: true }),
+        [setState])
+
+    const onInitAuthApi = useCallback(auth => {
+        if (auth.isSignedIn.get()) {
+            onSuccessfulSignIn(auth.currentUser.get(), setStateOnSignIn(auth))
         }
-    })
+        // so that App re-renders and then renders LandingPage
+        else setGoogleAuthApi(auth)
+    }, [onSuccessfulSignIn, setStateOnSignIn, setGoogleAuthApi])
+
+    useEffect(() => {
+        if (!isNil(window.gapi) && isNil(googleAuthApi)) {
+            initAuthApi(onInitAuthApi)
+        }
+    }, [googleAuthApi, onInitAuthApi])
 
     return {
-        isSignedIn,
+        ...state,
         signIn,
         signOut,
-        googleAuthApi
     }
 }
