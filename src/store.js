@@ -1,8 +1,7 @@
-import { applyMiddleware, compose, createStore } from "redux";
-import createSagaMiddleware from 'redux-saga';
-import { formMiddleware } from 'react-admin';
-import { routerMiddleware } from 'react-router-redux';
-import { createHashHistory } from 'history';
+import { applyMiddleware, compose, createStore } from "redux"
+import { routerMiddleware } from 'connected-react-router'
+import createSagaMiddleware from 'redux-saga'
+import { createHashHistory } from 'history'
 
 import { isDevEnv } from "./common/constants";
 import rootReducer from "./rootReducer";
@@ -15,12 +14,11 @@ const configureStore = initialState => {
 
     const composeEnhancers = (isDevEnv && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-    const store = createStore(rootReducer,
+    const store = createStore(rootReducer(adminHistory),
         initialState,
         composeEnhancers(
             applyMiddleware(
                 sagaMiddleware,
-                formMiddleware,
                 routerMiddleware(adminHistory),
             )
         )

@@ -1,15 +1,10 @@
 import { combineReducers } from 'redux'
-import { reducer as formReducer } from 'redux-form';
-import { routerReducer } from 'react-router-redux';
-import { adminReducer, defaultI18nProvider, i18nReducer } from 'react-admin';
+import { adminReducer } from 'react-admin'
+import { connectRouter } from 'connected-react-router'
 
 
-const LOCALE = 'en';
-
-export default combineReducers({
+export default (history) => combineReducers({
     admin: adminReducer,
-    i18n: i18nReducer(LOCALE, defaultI18nProvider(LOCALE)),
-    form: formReducer,
-    router: routerReducer,
+    router: connectRouter(history)
     // other reducers
 });
