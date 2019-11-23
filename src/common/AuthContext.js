@@ -1,11 +1,11 @@
 import React from 'react'
 
 const shape = {
+    initializedGoogleAuth: false,
     isSignedIn: false,
+    userInfo: {},
     signIn: () => {},
-    signOut: () => {},
-    googleAuthApi: {},
-    userInfo: {}
+    signOut: () => {}
 }
 
 export const AuthContext = React.createContext(shape)

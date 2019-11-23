@@ -28,7 +28,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
      */
     const convertDataRequestToHTTP = (type, resource, params) => {
         let url = `${apiUrl}/${resource}`;
-        const idToken = window.googleAuthApi.currentUser.get().getAuthResponse().id_token;
+        const idToken = window.googleAuth.currentUser.get().getAuthResponse().id_token;
         const options = {
             headers: new Headers({
                 Accept: "application/json",

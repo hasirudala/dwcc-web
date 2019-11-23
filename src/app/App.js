@@ -17,10 +17,8 @@ const unsetAuthHeader = () => axios.defaults.headers.common['Authorization'] = '
 export default function App() {
     const authState = useAuth(setAuthHeader, unsetAuthHeader)
 
-    if(isNil(authState.googleAuthApi)) // another way of saying isInitializing
-        return <div className="App-header">Starting...</div>
-    else
-        window.googleAuthApi = authState.googleAuthApi
+    if(isNil(window.googleAuth))
+        return <div>Starting...</div>
 
     return (
         <AuthContext.Provider value={authState}>

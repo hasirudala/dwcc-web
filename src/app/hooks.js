@@ -7,58 +7,62 @@ import { googleIdentityClientId, allowedHostedDomain } from "../common/constants
 
 export default function useAuth(setAuthHeaderFn, unsetAuthHeaderFn) {
     const [state, setState] = useState({
-        googleAuthApi: null,
+        initializedGoogleAuth: false,
         isSignedIn: false,
         userInfo: {},
     })
 
-    const gAuthApi = state.googleAuthApi
-
-    const setGoogleAuthApi = useCallback(authObj => {
-        setState(prevState => ({ ...prevState, googleAuthApi: authObj }))
+    const setInitializedGoogleAuth = useCallback(() => {
+        setState(prevState => ({ ...prevState, initializedGoogleAuth: true }))
     }, [setState])
 
     const setSignedOut = useCallback(() => {
-        setState(prevState => ({ ...prevState, userInfo: {}, isSignedIn: false }))
         unsetAuthHeaderFn()
+        setState(prevState => ({ ...prevState, userInfo: {}, isSignedIn: false }))
     }, [setState, unsetAuthHeaderFn])
 
-    const signOut = () => {
-        gAuthApi.signOut().then(setSignedOut)
-    }
+    const signOut = useCallback(() => {
+        window.googleAuth
+        &&
+        window.googleAuth.signOut().then(setSignedOut)
+    }, [setSignedOut])
 
     const setUserInfoAndSignedIn = useCallback(userInfo => {
-        setState(prevState => ({ ...prevState, userInfo, isSignedIn: true }))
+        // set all state together to prevent re-renders
+        setState({ initializedGoogleAuth: true, userInfo, isSignedIn: true })
     }, [setState])
 
-    const setAllStateOnSignIn = useCallback(googleAuthApi =>
-            userInfo => setState({ googleAuthApi, userInfo, isSignedIn: true })
-        , [setState])
-
-    const onSuccessfulSignIn = useCallback((gAuthUser, onFetchUserInfo) => {
+    const onSuccessfulSignIn = useCallback((gAuthUser, onSuccessfulFetch) => {
         setAuthHeaderFn(gAuthUser)
-        fetchUserInfo(onFetchUserInfo)
-    }, [setAuthHeaderFn])
+        fetchUserInfo(onSuccessfulFetch).catch(signOut)
+    }, [setAuthHeaderFn, signOut])
 
     const signIn = () => {
-        gAuthApi
+        window.googleAuth
+        &&
+        window.googleAuth
         .signIn({ prompt: 'select_account' })
         .then(user => onSuccessfulSignIn(user, setUserInfoAndSignedIn))
     }
 
     const onInitAuthApi = useCallback(auth => {
+        ////////////////////////
+        window.googleAuth = auth
+        ///////////////////////
         if (auth.isSignedIn.get()) {
-            onSuccessfulSignIn(auth.currentUser.get(), setAllStateOnSignIn(auth))
+            onSuccessfulSignIn(auth.currentUser.get(), setUserInfoAndSignedIn)
         }
-        // so that App re-renders and then renders LandingPage
-        else setGoogleAuthApi(auth)
-    }, [onSuccessfulSignIn, setAllStateOnSignIn, setGoogleAuthApi])
+        else {
+            setInitializedGoogleAuth()
+            // so that App re-renders and then renders LandingPage
+        }
+    }, [onSuccessfulSignIn, setUserInfoAndSignedIn, setInitializedGoogleAuth])
 
     useEffect(() => {
-        if (!isNil(window.gapi) && isNil(gAuthApi)) {
+        if (!isNil(window.gapi) && isNil(window.googleAuth)) {
             initAuthApi(onInitAuthApi)
         }
-    }, [gAuthApi, onInitAuthApi])
+    }, [onInitAuthApi])
 
     return { ...state, signIn, signOut }
 }
@@ -77,10 +81,18 @@ function initAuthApi(onInit) {
 }
 
 function handleNonOk(response) {
-    if (response.status === 401 || response.status === 403)
-        throw Error("You do not have permissions to access this application. " +
-            "Contact your organisation's administrator")
-    throw Error("Unable to validate credentials")
+    switch (response.status) {
+        case 401:
+        case 403:
+            throw Error("You do not have permissions to access this application. "
+                + "Contact your organisation's administrator")
+        case 504:
+            alert("An external service didn't respond. Try again or hit REFRESH on your browser")
+            break;
+        default:
+            console.error(JSON.stringify(response))
+            throw Error("Unable to validate credentials")
+    }
 }
 
 
@@ -93,5 +105,6 @@ const fetchUserInfo = (onSuccess) =>
     })
     .catch(error => {
         alert(error.message)
+        throw error
     })
 
