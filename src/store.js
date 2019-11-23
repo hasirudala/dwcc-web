@@ -1,13 +1,13 @@
 import { applyMiddleware, compose, createStore } from "redux"
 import { routerMiddleware } from 'connected-react-router'
 import createSagaMiddleware from 'redux-saga'
-import { createBrowserHistory } from 'history'
+import { createHashHistory } from 'history'
 
 import { isDevEnv } from "./common/constants";
 import rootReducer from "./rootReducer";
 import rootSaga from "./rootSaga";
 
-export const adminHistory = createBrowserHistory({ basename: "/admin" })
+export const adminHistory = createHashHistory()
 
 const configureStore = initialState => {
     const sagaMiddleware = createSagaMiddleware();
