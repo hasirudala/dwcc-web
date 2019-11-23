@@ -10,7 +10,6 @@ const bgContainerStyle = {
     backgroundPosition: 'center',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
-    minHeight: '98vh'
 }
 
 export default function LandingPage() {
@@ -18,12 +17,9 @@ export default function LandingPage() {
         <Container>
             <Row>
                 <Col sm={6}>
-                    <Row style={{ paddingTop: '12rem' }}>
+                    <Row className="d-flex flex-column justify-content-center min-vh-100">
                         <h1 className="display-1"><strong>Dry Waste Collection</strong></h1>
                         <h3>Information Management System</h3>
-                    </Row>
-                    <br/>
-                    <Row>
                         <Login />
                     </Row>
                 </Col>

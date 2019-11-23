@@ -7,16 +7,15 @@ import { AuthContext } from '../common/AuthContext'
 import Routes from './Routes'
 import SignInPage from './SignInPage'
 
-
-const initAxios = googleUser => {
-    axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = '/api'
+const setAuthHeader = googleUser => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${googleUser.getAuthResponse().id_token}`
 }
+const unsetAuthHeader = () => axios.defaults.headers.common['Authorization'] = ''
 
-const resetAxios = () => axios.defaults.headers.common['Authorization'] = ''
 
-function App() {
-    const authState = useAuth(initAxios, resetAxios)
+export default function App() {
+    const authState = useAuth(setAuthHeader, unsetAuthHeader)
 
     if(isNil(authState.googleAuthApi)) // another way of saying isInitializing
         return <div className="App-header">Starting...</div>
@@ -34,5 +33,3 @@ function App() {
         </AuthContext.Provider>
     )
 }
-
-export default App
