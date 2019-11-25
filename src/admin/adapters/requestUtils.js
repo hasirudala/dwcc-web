@@ -24,7 +24,8 @@ const stringifyPagination = (paginationObj, sortObj) => {
 
 class FilterProcessor {
     static getPath(filter) {
-        if (_.isEmpty(filter)) return '';
+        if (filter.q === "" || _.isEmpty(filter))
+            return ''
 
         let basePath = 'search';
         const endingIdPattern = /Id$/;

@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux'
-import { adminReducer } from 'react-admin'
+import { adminReducer, USER_LOGOUT } from 'react-admin'
 import { connectRouter } from 'connected-react-router'
 
 
-export default (history) => combineReducers({
+const rootReducer = (history) => combineReducers({
     admin: adminReducer,
     router: connectRouter(history)
     // other reducers
 });
+
+export default (adminHistory) => (state, action) =>
+    rootReducer(adminHistory)(action.type !== USER_LOGOUT ? state : undefined, action);

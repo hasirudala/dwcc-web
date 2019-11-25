@@ -1,9 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
 import { adminSaga } from 'react-admin';
 
-import { authProvider, dataProvider as springDataProvider } from './admin';
-
-const dataProvider = springDataProvider('/api');
+import { authProvider, dataProvider } from './admin';
 
 
 export default function* rootSaga() {
