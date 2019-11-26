@@ -11,7 +11,9 @@ import Dashboard from './Dashboard'
 import { ListUsers, CreateUser, EditUser } from "./resources/users"
 import { CreateRegion, EditRegion, ListRegions, ShowRegion } from "./resources/regions"
 import { CreateWard, EditWard, ListWards, ShowWard } from "./resources/wards"
+import { CreateDwcc, EditDwcc, ListDwccs, ShowDwcc } from "./resources/dwccs"
 
+defaultMessages['ra']['boolean']['null'] = '?'
 const i18nProvider = polyglotI18nProvider(() => defaultMessages)
 
 export default class DwccAdmin extends React.Component {
@@ -48,6 +50,13 @@ export default class DwccAdmin extends React.Component {
                           create={CreateWard}
                           edit={EditWard}
                           show={ShowWard}
+                />
+                <Resource name="dwccs"
+                          list={ListDwccs}
+                          create={CreateDwcc}
+                          edit={EditDwcc}
+                          show={ShowDwcc}
+                          options={{ label: 'DWCCs' }}
                 />
             </Admin>
         )

@@ -56,7 +56,7 @@ const CreateEditForm = props =>
             <TextInput source="name" label="Name" validate={isRequired} fullWidth />
             <LineBreak n={3} />
             <ReferenceInput label="Region" source="regionId" reference="regions">
-                <SelectInput optionText="name" fullWidth />
+                <SelectInput optionText="name" validate={isRequired} fullWidth />
             </ReferenceInput>
         </Div50>
     </SimpleForm>
