@@ -8,9 +8,10 @@ import {
 import { isRequired, validateEmail } from './validators'
 import ActionsWithBackButton from "../components/ActionsWithBackButton"
 import LineBreak from '../components/LineBreak'
+import Div50 from "../components/Div50"
 
 
-export const UsersList = (props) => (
+export const ListUsers = (props) => (
     <List {...props} bulkActionButtons={false}>
         <Datagrid rowClick={() => false}>
             <TextField source="email" label="Login/email ID" />
@@ -41,11 +42,9 @@ export const EditUser = props =>
     </Edit>
 
 
-const Div = ({ children }) => <div style={{ width: '50%' }}>{children}</div>
-
 const CreateEditForm = ({ edit, ...props }) =>
     <SimpleForm {...props} redirect="list">
-        <Div>
+        <Div50>
             {
                 edit ?
                     <TextInput disabled source="email" fullWidth />
@@ -56,5 +55,5 @@ const CreateEditForm = ({ edit, ...props }) =>
             <TextInput source="name" label="Name of person" validate={isRequired} fullWidth />
             <LineBreak n={3} />
             <BooleanInput source="isAdmin" label="Has administrator privileges" fullWidth />
-        </Div>
+        </Div50>
     </SimpleForm>

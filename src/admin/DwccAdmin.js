@@ -8,7 +8,9 @@ import authProvider from "./adapters/authProvider"
 import dataProvider from "./adapters/dataProvider"
 import { store, adminHistory } from "../store"
 import Dashboard from './Dashboard'
-import { UsersList, CreateUser, EditUser } from "./resources/users"
+import { ListUsers, CreateUser, EditUser } from "./resources/users"
+import { CreateRegion, EditRegion, ListRegions, ShowRegion } from "./resources/regions"
+import { CreateWard, EditWard, ListWards, ShowWard } from "./resources/wards"
 
 const i18nProvider = polyglotI18nProvider(() => defaultMessages)
 
@@ -30,7 +32,23 @@ export default class DwccAdmin extends React.Component {
                 history={adminHistory}
                 i18nProvider={i18nProvider}
             >
-                <Resource name="users" list={UsersList} create={CreateUser} edit={EditUser} />
+                <Resource name="users"
+                          list={ListUsers}
+                          create={CreateUser}
+                          edit={EditUser}
+                />
+                <Resource name="regions"
+                          list={ListRegions}
+                          create={CreateRegion}
+                          edit={EditRegion}
+                          show={ShowRegion}
+                />
+                <Resource name="wards"
+                          list={ListWards}
+                          create={CreateWard}
+                          edit={EditWard}
+                          show={ShowWard}
+                />
             </Admin>
         )
     }

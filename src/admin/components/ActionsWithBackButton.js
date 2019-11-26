@@ -7,8 +7,8 @@ import BackButton from './BackButton'
 export default function ActionsWithBackButton({ history, children }) {
     return (
         <TopToolbar>
-            <BackButton history={history} />
             { children }
+            <BackButton history={history} />
         </TopToolbar>
     )
 }
