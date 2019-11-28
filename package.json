@@ -25,10 +25,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "openssl enc -aes-256-cbc -d -in .env.production.enc -out .env.production.local && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy_local": "openssl enc -aes-256-cbc -d -in .env.production.enc -out .env.production.local && react-scripts build && rm -rf ../dwcc-server/src/main/resources/static/* && cp -R build/* ../dwcc-server/src/main/resources/static/."
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"

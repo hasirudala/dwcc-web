@@ -11,11 +11,11 @@ yarn install
 yarn start
 ```
 
-To decrypt the .env.production.enc file, do
+### Build
+Ensure `.env.production` is present, then
 ```
-openssl enc -aes-256-cbc -d -in .env.production.enc -out .env.production -k <PASS>
+yarn build
 ```
-
 ---
 
 ##### Env vars to be set:
