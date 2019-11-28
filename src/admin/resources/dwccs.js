@@ -5,7 +5,7 @@ import {
     SimpleShowLayout, BooleanField, NumberField, DateField, NullableBooleanInput,
     DateInput, NumberInput
 } from 'react-admin'
-import { isRequired } from "./validators"
+import { dateNotInFuture, isRequired } from "../utils/validators"
 import LineBreak from '../components/LineBreak'
 import ActionsWithBackButton from "../components/ActionsWithBackButton"
 import DefaultShowActions from "../components/DefaultShowActions"
@@ -74,7 +74,7 @@ const CreateEditForm = props =>
             <LineBreak n={2} />
             <NullableBooleanInput source="ownedAndOperated" label="Owned and operated" style={{ width: '100%' }} />
             <LineBreak n={2} />
-            <DateInput source="operatingSince" label="Operating since" fullWidth />
+            <DateInput source="operatingSince" label="Operating since" validate={[dateNotInFuture()]} fullWidth />
             <LineBreak n={2} />
             <NumberInput source="areaInSqFt" label="Area in sq. ft." fullWidth />
             <LineBreak n={2} />

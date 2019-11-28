@@ -5,7 +5,7 @@ import {
 } from 'react-admin'
 
 
-import { isRequired, validateEmail } from './validators'
+import { isRequired, validateEmail } from '../utils/validators'
 import ActionsWithBackButton from "../components/ActionsWithBackButton"
 import LineBreak from '../components/LineBreak'
 import Div50 from "../components/Div50"

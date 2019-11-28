@@ -76,7 +76,7 @@ function initAuthApi(onInit) {
             client_id: googleIdentityClientId,
             hosted_domain: allowedHostedDomain
         })
-        .then(onInit, /* onError */(error) => alert(error.message))
+        .then(onInit, error => alert(error.message || JSON.stringify(error)))
     })
 }
 

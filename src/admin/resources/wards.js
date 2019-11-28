@@ -4,7 +4,7 @@ import {
     TextInput, ReferenceInput, SelectInput, ReferenceField, Show,
     SimpleShowLayout
 } from 'react-admin'
-import { isRequired } from "./validators"
+import { isRequired } from "../utils/validators"
 import LineBreak from '../components/LineBreak'
 import ActionsWithBackButton from "../components/ActionsWithBackButton"
 import DefaultShowActions from "../components/DefaultShowActions"
