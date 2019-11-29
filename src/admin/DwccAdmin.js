@@ -8,6 +8,7 @@ import authProvider from "./adapters/authProvider"
 import dataProvider from "./adapters/dataProvider"
 import { store, adminHistory } from "../store"
 import Dashboard from './Dashboard'
+import CustomLayout from "./components/CustomLayout"
 import { ListUsers, CreateUser, EditUser } from "./resources/users"
 import { CreateRegion, EditRegion, ListRegions, ShowRegion } from "./resources/regions"
 import { CreateWard, EditWard, ListWards, ShowWard } from "./resources/wards"
@@ -33,6 +34,7 @@ export default class DwccAdmin extends React.Component {
                 dataProvider={dataProvider}
                 history={adminHistory}
                 i18nProvider={i18nProvider}
+                layout={CustomLayout}
             >
                 <Resource name="users"
                           list={ListUsers}
