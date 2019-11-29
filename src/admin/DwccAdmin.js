@@ -9,6 +9,7 @@ import dataProvider from "./adapters/dataProvider"
 import { store, adminHistory } from "../store"
 import Dashboard from './Dashboard'
 import CustomLayout from "./components/CustomLayout"
+import CustomLogoutButton from "./components/CustomLogoutButton"
 import { ListUsers, CreateUser, EditUser } from "./resources/users"
 import { CreateRegion, EditRegion, ListRegions, ShowRegion } from "./resources/regions"
 import { CreateWard, EditWard, ListWards, ShowWard } from "./resources/wards"
@@ -16,6 +17,7 @@ import { CreateDwcc, EditDwcc, ListDwccs, ShowDwcc } from "./resources/dwccs"
 
 defaultMessages['ra']['boolean']['null'] = '?'
 const i18nProvider = polyglotI18nProvider(() => defaultMessages)
+
 
 export default class DwccAdmin extends React.Component {
     static childContextTypes = {
@@ -35,6 +37,7 @@ export default class DwccAdmin extends React.Component {
                 history={adminHistory}
                 i18nProvider={i18nProvider}
                 layout={CustomLayout}
+                logoutButton={CustomLogoutButton}
             >
                 <Resource name="users"
                           list={ListUsers}
