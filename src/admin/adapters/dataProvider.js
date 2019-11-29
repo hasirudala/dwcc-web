@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { fetchUtils } from 'react-admin'
 import { UrlPartsGenerator } from './requestUtils'
 import SpringResponse from "./SpringResponse"
+import { isDevEnv, dummyToken } from "../../common/constants"
 
 
 const apiUrl = '/api'
@@ -9,7 +10,7 @@ const apiUrl = '/api'
 const httpClient = (url, options = {}) => {
     options.user = {
         authenticated: true,
-        token: `Bearer ${window.googleAuth.currentUser.get().getAuthResponse().id_token}`
+        token: `Bearer ${ isDevEnv ? dummyToken : window.googleAuth.currentUser.get().getAuthResponse().id_token }`
     };
     return fetchUtils.fetchJson(url, options);
 }

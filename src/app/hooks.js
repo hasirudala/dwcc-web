@@ -2,10 +2,10 @@ import { useState, useEffect, useCallback } from 'react'
 import isNil from 'lodash.isnil'
 import axios from 'axios'
 
-import { googleIdentityClientId, allowedHostedDomain } from "../common/constants"
+import { googleIdentityClientId, allowedHostedDomain, devAuthState, isDevEnv } from "../common/constants"
 
 
-export default function useAuth(setAuthHeaderFn, unsetAuthHeaderFn) {
+function useAuth(setAuthHeaderFn, unsetAuthHeaderFn) {
     const [state, setState] = useState({
         initializedGoogleAuth: false,
         isSignedIn: false,
@@ -108,3 +108,7 @@ const fetchUserInfo = (onSuccess) =>
         throw error
     })
 
+
+const useDevAuth = () => devAuthState
+
+export default isDevEnv ? useDevAuth : useAuth
