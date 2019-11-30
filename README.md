@@ -1,4 +1,4 @@
-## Run app
+[![buddy pipeline](https://app.buddy.works/samanvayfoundation/dwcc-web/pipelines/pipeline/226036/badge.svg?token=6aee6eabb017650b340b14b326b856d78b5243ae617e63fe2b977f5e1ae56c26 "buddy pipeline")](https://app.buddy.works/samanvayfoundation/dwcc-web/pipelines/pipeline/226036)
 
 ### Install dependencies
 ```
