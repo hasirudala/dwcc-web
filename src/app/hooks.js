@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import isNil from 'lodash.isnil'
+import isNil from 'lodash/isNil'
 import axios from 'axios'
 
 import { googleIdentityClientId, allowedHostedDomain, devAuthState, isDevEnv } from "../common/constants"

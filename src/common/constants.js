@@ -1,4 +1,4 @@
-import isNil from 'lodash.isnil'
+import isNil from 'lodash/isNil'
 
 export const isDevEnv = process.env.NODE_ENV === "development"
 

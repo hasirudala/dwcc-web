@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 import { Link } from "react-router-dom"
 import Nav from 'react-bootstrap/Nav'
 import Dropdown from "react-bootstrap/Dropdown"
+import SignOutIcon from '@material-ui/icons/ExitToApp'
+
 
 import links from "../common/links"
 import { AuthContext } from "../common/AuthContext"
@@ -28,9 +30,7 @@ export default function TopNav() {
                     </Dropdown.Toggle>
                     <Dropdown.Menu style={{ borderRadius: '4px' }}>
                         <Dropdown.Item onClick={signOut}>
-                            <span className="oi oi-account-logout"
-                                  title="account logout"
-                                  aria-hidden="true"/>&nbsp;&nbsp;
+                            <SignOutIcon/>&nbsp;&nbsp;
                             Sign Out
                         </Dropdown.Item>
                     </Dropdown.Menu>

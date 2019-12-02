@@ -1,5 +1,5 @@
 import React from 'react'
-import isNil from 'lodash.isnil'
+import isNil from 'lodash/isNil'
 import axios from 'axios'
 
 import useAuth from './hooks'
