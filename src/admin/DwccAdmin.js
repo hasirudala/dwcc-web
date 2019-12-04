@@ -14,6 +14,9 @@ import { ListUsers, CreateUser, EditUser } from "./resources/users"
 import { CreateRegion, EditRegion, ListRegions, ShowRegion } from "./resources/regions"
 import { CreateWard, EditWard, ListWards, ShowWard } from "./resources/wards"
 import { CreateDwcc, EditDwcc, ListDwccs, ShowDwcc } from "./resources/dwccs"
+import { CreateWasteType, EditWasteType, ListWasteTypes, ShowWasteType } from "./resources/wasteTypes"
+import { CreateWasteTag, EditWasteTag, ListWasteTags, ShowWasteTag } from "./resources/wasteTags"
+import { CreateWasteItem, EditWasteItem, ListWasteItems, ShowWasteItem } from "./resources/wasteItems"
 
 defaultMessages['ra']['boolean']['null'] = '?'
 const i18nProvider = polyglotI18nProvider(() => defaultMessages)
@@ -62,6 +65,27 @@ export default class DwccAdmin extends React.Component {
                           edit={EditDwcc}
                           show={ShowDwcc}
                           options={{ label: 'DWCCs' }}
+                />
+                <Resource name="wasteTypes"
+                          list={ListWasteTypes}
+                          create={CreateWasteType}
+                          edit={EditWasteType}
+                          show={ShowWasteType}
+                          options={{ label: 'Waste Types' }}
+                />
+                <Resource name="wasteTags"
+                          list={ListWasteTags}
+                          create={CreateWasteTag}
+                          edit={EditWasteTag}
+                          show={ShowWasteTag}
+                          options={{ label: 'Waste Tags' }}
+                />
+                <Resource name="wasteItems"
+                          list={ListWasteItems}
+                          create={CreateWasteItem}
+                          edit={EditWasteItem}
+                          show={ShowWasteItem}
+                          options={{ label: 'Waste Items' }}
                 />
             </Admin>
         )
