@@ -15,15 +15,20 @@ const boxStyle = "d-flex flex-column justify-content-center align-items-center h
 const navContainer = "d-flex justify-content-end align-items-center"
 
 export default function Home() {
+    const previouslySelectedDwcc = JSON.parse(localStorage.getItem('dwcc')) || {}
+
     const [state, setState] = React.useState({
-        activeDwcc: {},
-        dwccSelectorShown: true
+        activeDwcc: previouslySelectedDwcc,
+        dwccSelectorShown: isEmpty(previouslySelectedDwcc)
     })
 
     const { activeDwcc, dwccSelectorShown } = state
     const showDwccSelector = () => setState(prevState => ({ ...prevState, dwccSelectorShown: true }))
     const hideDwccSelector = () => setState(prevState => ({ ...prevState, dwccSelectorShown: false }))
-    const handleDwccSelect = dwcc => setState({ activeDwcc: dwcc, dwccSelectorShown: false })
+    const handleDwccSelect = dwcc => {
+        localStorage.setItem('dwcc', JSON.stringify(dwcc))
+        setState({ activeDwcc: dwcc, dwccSelectorShown: false })
+    }
 
     return (
         <Container className="min-vh-100">

@@ -18,6 +18,7 @@ function useAuth(setAuthHeaderFn, unsetAuthHeaderFn) {
 
     const setSignedOut = useCallback(() => {
         unsetAuthHeaderFn()
+        localStorage.clear()
         setState(prevState => ({ ...prevState, userInfo: {}, isSignedIn: false }))
     }, [setState, unsetAuthHeaderFn])
 
