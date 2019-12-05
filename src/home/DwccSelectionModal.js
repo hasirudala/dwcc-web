@@ -5,10 +5,15 @@ import axios from "axios/index"
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
 import Spinner from "react-bootstrap/Spinner"
+import { Link } from "react-router-dom"
+import { AuthContext } from "../common/AuthContext"
 
+
+const modalHeaderStyle = "d-flex align-items-center justify-content-between"
 
 export default function DwccSelectionModal({ show, handleClose, handleSelect, showClose }) {
     const [state, setState] = React.useState({ dwccs: null, isLoading: true })
+    const { userInfo } = React.useContext(AuthContext)
 
     const setDwccs = dwccs => setState({ dwccs, isLoading: false })
     const unsetDwccs = () => setState({ dwccs: null, isLoading: true })
@@ -29,8 +34,19 @@ export default function DwccSelectionModal({ show, handleClose, handleSelect, sh
                keyboard={showClose}
                backdrop={showClose ? true : 'static'}
         >
-            <Modal.Header closeButton={showClose}>
-                <Modal.Title>Select DWCC</Modal.Title>
+            <Modal.Header closeButton={showClose} className={modalHeaderStyle}>
+                <Modal.Title>
+                    Select DWCC
+                </Modal.Title>
+                {
+                    userInfo.isAdmin && !showClose &&
+                    <>
+                        <small>OR</small>
+                        <Link to="/admin">
+                            <Button variant="outline-light">Go to Admin Console</Button>
+                        </Link>
+                    </>
+                }
             </Modal.Header>
             <Modal.Body>
                 {state.isLoading ?

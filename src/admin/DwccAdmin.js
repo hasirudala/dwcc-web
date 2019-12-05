@@ -33,14 +33,13 @@ export default class DwccAdmin extends React.Component {
 
     render() {
         return (
-            <Admin
-                dashboard={Dashboard}
-                authProvider={authProvider}
-                dataProvider={dataProvider}
-                history={adminHistory}
-                i18nProvider={i18nProvider}
-                layout={CustomLayout}
-                logoutButton={CustomLogoutButton}
+            <Admin dashboard={Dashboard}
+                   authProvider={authProvider}
+                   dataProvider={dataProvider}
+                   history={adminHistory}
+                   i18nProvider={i18nProvider}
+                   layout={CustomLayout}
+                   logoutButton={CustomLogoutButton}
             >
                 <Resource name="users"
                           list={ListUsers}
