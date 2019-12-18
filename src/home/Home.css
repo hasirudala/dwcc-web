@@ -1,9 +1,14 @@
-.h-300px {
+.box-height {
     min-height: 18rem;
 }
 
 @media (max-width: 767px) {
-    .h-300px {
+    .box-height {
         min-height: 9rem;
     }
+}
+
+.calendar {
+    background-color: #B7BFC5;
+    color: #445
 }

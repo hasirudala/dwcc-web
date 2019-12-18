@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from "react-router-dom"
 import Nav from 'react-bootstrap/Nav'
 import Dropdown from "react-bootstrap/Dropdown"
+import PersonIcon from '@material-ui/icons/Person'
 import SignOutIcon from '@material-ui/icons/ExitToApp'
 
 
@@ -22,15 +23,16 @@ export default function TopNav() {
             }
             <Nav.Item>
                 <Dropdown>
-                    <Dropdown.Toggle variant="outline-info"
+                    <Dropdown.Toggle variant="outline-light"
                                      id="userMenu"
-                                     style={{ borderRadius: '4px' }}
+                                     className="d-flex align-items-center"
                     >
+                        <PersonIcon className="mr-2" />
                         {userInfo.name}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu style={{ borderRadius: '4px' }}>
-                        <Dropdown.Item onClick={signOut}>
-                            <SignOutIcon/>&nbsp;&nbsp;
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={signOut} className="d-flex align-items-end">
+                            <SignOutIcon className="mr-2" />
                             Sign Out
                         </Dropdown.Item>
                     </Dropdown.Menu>

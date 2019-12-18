@@ -4,9 +4,10 @@ import { Provider } from 'react-redux';
 import { HashRouter } from "react-router-dom";
 
 import * as serviceWorker from './serviceWorker';
-import App from './app/App';
 import { store } from './store';
 import { ErrorBoundary } from "./common/bugsnag";
+import App from './app/App'
+import './index.css'
 
 
 ReactDOM.render(

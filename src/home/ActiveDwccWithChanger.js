@@ -1,16 +1,21 @@
 import React from 'react'
 import isEmpty from "lodash/isEmpty"
 import Button from 'react-bootstrap/Button'
-import EditIcon from '@material-ui/icons/Edit'
+import { Link } from "react-router-dom"
+import MyLocationIcon from '@material-ui/icons/MyLocation'
 
 
 export default function ActiveDwccWithChanger({ activeDwcc, showDwccs }) {
     return (
         <>
-            <div className="d-flex align-items-center">
-                <h1 className="d-inline">{activeDwcc.name || 'DWCC'}</h1>
+            <div className="d-flex align-items-end">
+                <Link to="/">
+                    <h1 className="d-inline text-success">
+                        {activeDwcc.name || 'DWCC'}
+                    </h1>
+                </Link>
                 <Button variant="link" onClick={showDwccs}>
-                    <EditIcon />
+                    <MyLocationIcon />
                 </Button>
             </div>
             {

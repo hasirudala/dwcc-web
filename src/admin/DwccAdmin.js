@@ -17,6 +17,7 @@ import { CreateDwcc, EditDwcc, ListDwccs, ShowDwcc } from "./resources/dwccs"
 import { CreateWasteType, EditWasteType, ListWasteTypes, ShowWasteType } from "./resources/wasteTypes"
 import { CreateWasteTag, EditWasteTag, ListWasteTags, ShowWasteTag } from "./resources/wasteTags"
 import { CreateWasteItem, EditWasteItem, ListWasteItems, ShowWasteItem } from "./resources/wasteItems"
+import { CreateVehicleType, EditVehicleType, ListVehicleTypes, ShowVehicleType } from "./resources/vehicleTypes"
 
 defaultMessages['ra']['boolean']['null'] = '?'
 const i18nProvider = polyglotI18nProvider(() => defaultMessages)
@@ -85,6 +86,13 @@ export default class DwccAdmin extends React.Component {
                           edit={EditWasteItem}
                           show={ShowWasteItem}
                           options={{ label: 'Waste Items' }}
+                />
+                <Resource name="vehicleTypes"
+                          list={ListVehicleTypes}
+                          create={CreateVehicleType}
+                          edit={EditVehicleType}
+                          show={ShowVehicleType}
+                          options={{ label: 'Vehicle Types' }}
                 />
             </Admin>
         )

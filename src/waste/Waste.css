@@ -1,0 +1,19 @@
+
+.react-datepicker-wrapper input {
+    border: 0;
+    background-color: inherit;
+    font-size: 3em;
+    box-sizing: content-box;
+    width: 100%;
+}
+
+
+.blink {
+    animation: blinker 1s step-start infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
