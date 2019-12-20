@@ -10,7 +10,7 @@ import TopNav from './TopNav'
 import DwccSelectionModal from './DwccSelectionModal'
 import ActiveDwccWithChanger from './ActiveDwccWithChanger'
 import { DwccContext } from './DwccContext'
-import WasteMain from '../waste/WasteMain'
+import WasteHome from '../waste/WasteHome'
 
 
 const navContainer = "d-flex justify-content-end align-items-center"
@@ -79,7 +79,7 @@ export default function Home() {
                         </Col>
                     </Row>
                 </Route>
-                <Route path="/waste" component={WasteMain} />
+                <Route path="/waste" component={WasteHome} />
             </Container>
         </DwccContext.Provider>
     )

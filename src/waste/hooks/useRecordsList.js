@@ -5,7 +5,7 @@ import { DwccContext } from '../../home/DwccContext'
 import remove from 'lodash/remove'
 
 
-export default function useIncomingMain() {
+export default function useRecordsList(recordType) {
     const { dwcc } = useContext(DwccContext)
 
     const [state, setState] = useState({
@@ -15,7 +15,7 @@ export default function useIncomingMain() {
     });
 
     if (dwcc !== state.dwcc0) {
-        // this is done to re-render the list on context change
+        // this is to re-render the list on context change
         setState(prevState => ({ ...prevState, dwcc0: dwcc, records: null }))
     }
 
@@ -24,7 +24,7 @@ export default function useIncomingMain() {
     }, [setState])
 
     const fetchRecordsByMonthYear = useCallback(() => {
-        axios.get('/incomingWaste/search/getDwccRecordsByMonthYear', {
+        axios.get(`/${recordType}/search/getDwccRecordsByMonthYear`, {
                 params: {
                     m: state.selectedMonth.getMonth() + 1,
                     y: state.selectedMonth.getFullYear(),
@@ -32,8 +32,8 @@ export default function useIncomingMain() {
                     sort: 'date,ASC'
                 }
             })
-            .then(({ data }) => setRecords(data._embedded.incomingWaste))
-    }, [state, dwcc, setRecords])
+            .then(({ data }) => setRecords(data._embedded[recordType]))
+    }, [state, dwcc, setRecords, recordType])
 
     const handleMonthChange = useCallback(newDate => {
         setState(prevState => ({ ...prevState, selectedMonth: newDate, records: null }))

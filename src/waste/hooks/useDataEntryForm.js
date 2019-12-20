@@ -1,7 +1,10 @@
 import { useState, useCallback, useEffect } from 'react'
 import axios from 'axios/index'
+import { format } from 'date-fns'
+import { axiosErrorResponse} from '../../common/errors'
 
-export default function useIncomingDataEntryForm(onFormSubmit, edit, existingRecord) {
+
+export default function useDataEntryForm(onFormSubmit, edit, existingRecord, recordType) {
     const [addingNext, setAddingNext] = useState(false)
     const [wasteItems, setWasteItems] = useState(null)
     const [vehicleTypes, setVehicleTypes] = useState(null)
@@ -14,7 +17,7 @@ export default function useIncomingDataEntryForm(onFormSubmit, edit, existingRec
                 }
             })
             .then(({ data }) => setWasteItems(data.content))
-            .catch(error => alert(error.message))
+            .catch(error => alert(axiosErrorResponse(error)))
     }, [setWasteItems])
 
     const fetchVehicleTypes = useCallback(() => {
@@ -25,7 +28,7 @@ export default function useIncomingDataEntryForm(onFormSubmit, edit, existingRec
                 }
             })
             .then(({ data }) => setVehicleTypes(data.content))
-            .catch(error => alert(error.message))
+            .catch(error => alert(axiosErrorResponse(error)))
     }, [setVehicleTypes])
 
     useEffect(() => {
@@ -38,26 +41,41 @@ export default function useIncomingDataEntryForm(onFormSubmit, edit, existingRec
     const submitForm = useCallback((values, actions) => {
         edit ?
             axios
-                .put(`/incomingWaste/${existingRecord.id}`, values)
+                .put(`/${recordType}/${existingRecord.id}`, values)
                 .then(data => {
                     onFormSubmit(data.data)
                 })
-                .catch(error => alert(error.message))
+                .catch(error => {
+                    console.error(error.toJSON())
+                    alert(axiosErrorResponse(error))
+                })
             :
             axios
-                .post('/incomingWaste', values)
+                .post(`/${recordType}`, values)
                 .then(data => {
                     actions.resetForm()
                     onFormSubmit(data.data, addingNext)
                     setAddingNext(false)
                 })
+                .catch(error => {
+                    console.error(error.toJSON())
+                    alert(axiosErrorResponse(error))
+                })
+    }, [edit, existingRecord, onFormSubmit, addingNext, recordType])
+
+    const deleteRecord = useCallback((record) => {
+        if (window.confirm(`Record id #${record.id} of "${format(record.date, 'd MMM yyyy')}" will be DELETED. Continue?`))
+            axios
+                .delete(`/${recordType}/${record.id}`)
+                .then(data => onFormSubmit(data.data, 'delete'))
                 .catch(error => alert(error.message))
-    }, [edit, existingRecord, onFormSubmit, addingNext])
+    }, [recordType, onFormSubmit])
 
     return {
         wasteItems,
         vehicleTypes,
         setAddingNext,
-        submitForm
+        submitForm,
+        deleteRecord
     }
 }

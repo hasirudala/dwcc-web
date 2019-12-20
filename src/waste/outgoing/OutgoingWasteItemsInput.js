@@ -5,12 +5,13 @@ import Button from 'react-bootstrap/Button'
 import { useFormikContext, FieldArray, Field, ErrorMessage } from 'formik'
 import Select from 'react-select'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
-import { defaultSelectStyle } from '../../common/cutomStyles'
 import { emptyWasteItem } from './schema'
 import isEmpty from 'lodash/isEmpty'
+import { defaultSelectStyle } from '../../common/cutomStyles'
+import SelectOrCreateBuyer from './SelectOrCreateBuyer'
 
 
-export default function ItemizedWasteInputArray({ wasteItemsMeta }) {
+export default function OutgoingWasteItemsInputArray({ wasteItemsMeta }) {
     const { values: { wasteItems } } = useFormikContext()
 
     return (
@@ -26,11 +27,11 @@ export default function ItemizedWasteInputArray({ wasteItemsMeta }) {
                     </Col>
                     :
                     wasteItems.map((_, idx) =>
-                        <ItemizedWasteInput key={idx}
-                                            idx={idx}
-                                            itemOptions={wasteItemsMeta}
-                                            pushHelper={arrayHelpers.push}
-                                            removeHelper={arrayHelpers.remove}
+                        <OutgoingWasteItemsInput key={idx}
+                                                 idx={idx}
+                                                 itemOptions={wasteItemsMeta}
+                                                 pushHelper={arrayHelpers.push}
+                                                 removeHelper={arrayHelpers.remove}
                         />
                     )
             )}
@@ -38,8 +39,10 @@ export default function ItemizedWasteInputArray({ wasteItemsMeta }) {
     )
 }
 
-function ItemizedWasteInput({ idx, itemOptions, pushHelper, removeHelper }) {
-    const { values: { wasteItems, errorsIgnored }, setFieldValue } = useFormikContext()
+
+function OutgoingWasteItemsInput({ idx, itemOptions, pushHelper, removeHelper }) {
+    const { values: { wasteItems }, setFieldValue } = useFormikContext()
+
     return (
         <BsForm.Row className="align-items-center mb-3">
             <Col sm={2}>
@@ -74,14 +77,28 @@ function ItemizedWasteInput({ idx, itemOptions, pushHelper, removeHelper }) {
                 </small>
             </Col>
             <Col sm={2}>
-                <Field name={`wasteItems[${idx}].rejectQuantity`}
-                       placeholder="Reject Quantity"
+                <Field name={`wasteItems[${idx}].rate`}
+                       placeholder="Rate (₹)"
                        type="number"
                        as={BsForm.Control}
-                       validate={value => lessThanEqualToQty(value, wasteItems[idx].quantity, errorsIgnored)}
                 />
                 <small className="text-danger">
-                    <ErrorMessage name={`wasteItems[${idx}].rejectQuantity`} />
+                    <ErrorMessage name={`wasteItems[${idx}].rate`} />
+                </small>
+            </Col>
+            <Col sm={2}>
+                <Field name={`wasteItems[${idx}].buyerId`}>
+                    {
+                        ({ field }) =>
+                            <SelectOrCreateBuyer
+                                field={field}
+                                setFieldValue={setFieldValue}
+                                defaultVal={wasteItems[idx].buyer && wasteItems[idx].buyer}
+                            />
+                    }
+                </Field>
+                <small className="text-danger">
+                    <ErrorMessage name={`wasteItems[${idx}].rate`} />
                 </small>
             </Col>
             <Col sm={2}>
@@ -105,7 +122,4 @@ function ItemizedWasteInput({ idx, itemOptions, pushHelper, removeHelper }) {
         </BsForm.Row>
     )
 }
-
-const lessThanEqualToQty = (rejectQuantity, quantity, ignoreErrors) =>
-    !ignoreErrors && rejectQuantity > quantity && 'Cannot be greater than Quantity'
 

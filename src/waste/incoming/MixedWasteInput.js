@@ -9,7 +9,7 @@ import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
 import includes from 'lodash/includes'
 
-import { emptyMixedWaste } from '../schema'
+import { emptyMixedWaste } from './schema'
 import { defaultSelectStyle } from '../../common/cutomStyles'
 
 

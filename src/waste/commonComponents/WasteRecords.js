@@ -7,10 +7,11 @@ import { format } from 'date-fns'
 import ReportProblemIcon from '@material-ui/icons/ReportProblem'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import EditEntryModal from './EditEntryModal'
-import MonthPicker from './MonthPicker'
+import MonthPicker from '../incoming/MonthPicker'
+import { RecordType } from '../constants'
 
 
-export default function IncomingWasteRecords({ records, forMonth, onMonthChange, onEdit }) {
+export default function WasteRecords({ recordType, records, forMonth, onMonthChange, onEdit }) {
     const [currentEdit, setCurrentEdit] = React.useState(null)
 
     const closeEditEntryModal = React.useCallback(() => {
@@ -32,7 +33,7 @@ export default function IncomingWasteRecords({ records, forMonth, onMonthChange,
                     <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Flags</th>
+                        { recordType === RecordType.Incoming && <th>Flags</th> }
                         <th className="d-flex justify-content-end align-items-center">
                             <span className="font-weight-light">Filter</span> &nbsp;&nbsp;
                             <MonthPicker selectedMonth={forMonth} onMonthChange={onMonthChange} />
@@ -43,17 +44,26 @@ export default function IncomingWasteRecords({ records, forMonth, onMonthChange,
                     {
                         records.map((record, idx) =>
                             <tr key={idx}
-                                className={record.errorsIgnored && !record.approvedByAdmin ? 'text-warning' : ''}
+                                className={
+                                    recordType === RecordType.Incoming &&
+                                    record.errorsIgnored && !record.approvedByAdmin ?
+                                        'text-warning'
+                                        :
+                                        ''
+                                }
                             >
                                 <td>{format(new Date(record.date), 'd MMM yyyy, EEEE')}</td>
-                                <td>
-                                    {
-                                        record.errorsIgnored && <ReportProblemIcon className="mr-2" />
-                                    }
-                                    {
-                                        record.approvedByAdmin && <CheckCircleIcon />
-                                    }
-                                </td>
+                                {
+                                    recordType === RecordType.Incoming &&
+                                    <td>
+                                        {
+                                            record.errorsIgnored && <ReportProblemIcon className="mr-2" />
+                                        }
+                                        {
+                                            record.approvedByAdmin && <CheckCircleIcon />
+                                        }
+                                    </td>
+                                }
                                 <td className="d-flex justify-content-end">
                                     <Button variant="secondary" size="sm" onClick={() => setCurrentEdit(record.id)}>
                                         edit
@@ -68,6 +78,7 @@ export default function IncomingWasteRecords({ records, forMonth, onMonthChange,
                                 onClose={closeEditEntryModal}
                                 entryToEdit={currentEdit}
                                 onEdit={onEdit}
+                                recordType={recordType}
                 />
             </>
     )

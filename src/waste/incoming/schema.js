@@ -53,19 +53,19 @@ const schema = object({
 export default schema
 
 export const emptyDtdWaste = {
-    "vehicleNumber": '',
-    "vehicleTypeId": '',
-    "quantity": ''
+    vehicleNumber: '',
+    vehicleTypeId: '',
+    quantity: ''
 }
 
 export const emptyWasteItem = {
-    "itemId": '',
-    "quantity": '',
-    "rejectQuantity": '',
+    itemId: '',
+    quantity: '',
+    rejectQuantity: '',
 }
 
 export const emptyMixedWaste = {
-    "itemIds": [],
-    "quantity": '',
-    "rate": ''
+    itemIds: [],
+    quantity: '',
+    rate: ''
 }

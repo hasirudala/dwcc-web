@@ -4,24 +4,28 @@ import Container from 'react-bootstrap/Container'
 import Spinner from 'react-bootstrap/Spinner'
 import axios from 'axios'
 import isNil from 'lodash/isNil'
-import IncomingDataEntryForm from './IncomingDataEntryForm'
+import { RecordType } from '../constants'
+import IncomingDataEntryForm from '../incoming/IncomingDataEntryForm'
+import OutgoingDataEntryForm from '../outgoing/OutgoingDataEntryForm'
 
 
-export default function EditEntryModal({ showWhen, onClose, entryToEdit, onEdit }) {
+export default function EditEntryModal({ showWhen, onClose, entryToEdit, onEdit, recordType }) {
     const [record, setRecord] = React.useState(null)
 
     React.useEffect(() => {
         entryToEdit &&
         axios
-            .get(`/incomingWaste/${entryToEdit}`)
+            .get(`/${recordType}/${entryToEdit}`)
             .then(({ data }) => setRecord(data))
-    }, [entryToEdit, setRecord])
+    }, [entryToEdit, recordType, setRecord])
 
     const handleClose = React.useCallback((updatedEntry, action) => {
         updatedEntry && onEdit(updatedEntry, action)
         setRecord(null)
         onClose()
     }, [onEdit, setRecord, onClose])
+
+    const FormComponent = recordType === RecordType.Incoming ? IncomingDataEntryForm : OutgoingDataEntryForm
 
     return (
         <Modal show={showWhen} onHide={handleClose} onExit={handleClose} size="xl" scrollable>
@@ -42,7 +46,7 @@ export default function EditEntryModal({ showWhen, onClose, entryToEdit, onEdit 
                     </Modal.Header>
                     <Modal.Body  style={{ backgroundColor: '#2B3E50' }}>
                         <Container>
-                            <IncomingDataEntryForm onFormSubmit={handleClose} edit existingRecord={record} />
+                            <FormComponent onFormSubmit={handleClose} edit existingRecord={record} />
                         </Container>
                     </Modal.Body>
                 </>

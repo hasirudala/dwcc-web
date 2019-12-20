@@ -4,14 +4,13 @@ import {
     TextInput, Show, SimpleShowLayout
 } from 'react-admin'
 import { isRequired } from "../utils/validators"
-import LineBreak from '../components/LineBreak'
 import ActionsWithBackButton from "../components/ActionsWithBackButton"
 import DefaultShowActions from "../components/DefaultShowActions"
 import Div50 from "../components/Div50"
 
 
-export const ListVehicleTypes = (props) =>
-    <List {...props} bulkActionButtons={false} title="Vehicle Types">
+export const ListWasteBuyers = (props) =>
+    <List {...props} bulkActionButtons={false} title="Waste Buyers">
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <EditButton />
@@ -19,7 +18,7 @@ export const ListVehicleTypes = (props) =>
     </List>
 
 
-export const ShowVehicleType = (props) =>
+export const ShowWasteBuyer = (props) =>
     <Show {...props} actions={<DefaultShowActions history={props.history} />}>
         <SimpleShowLayout>
             <TextField source="name" />
@@ -27,13 +26,13 @@ export const ShowVehicleType = (props) =>
     </Show>
 
 
-export const CreateVehicleType = props =>
+export const CreateWasteBuyer = props =>
     <Create {...props}>
         <CreateEditForm />
     </Create>
 
 
-export const EditVehicleType = props =>
+export const EditWasteBuyer = props =>
     <Edit
         undoable={false}
         actions={<ActionsWithBackButton history={props.history} />}
@@ -46,8 +45,6 @@ export const EditVehicleType = props =>
 const CreateEditForm = props =>
     <SimpleForm {...props} redirect="list">
         <Div50>
-            <LineBreak n={3} />
             <TextInput source="name" label="Name" validate={isRequired} fullWidth />
-            <LineBreak n={3} />
         </Div50>
     </SimpleForm>

@@ -5,11 +5,12 @@ import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import CloseIcon from '@material-ui/icons/Close'
+import IncomingDataEntryForm from '../incoming/IncomingDataEntryForm'
+import OutgoingDataEntryForm from '../outgoing/OutgoingDataEntryForm'
+import { RecordType } from '../constants'
 
-import IncomingDataEntryForm from './IncomingDataEntryForm'
 
-
-export default function IncomingDataEntry({ onNewEntry }) {
+export default function DataEntry({ recordType, onNewEntry }) {
     const [formIsVisible, setFormVisible] = React.useState(false)
     const showForm = () => !formIsVisible && setFormVisible(true)
 
@@ -21,6 +22,8 @@ export default function IncomingDataEntry({ onNewEntry }) {
         onNewEntry(newRecord)
         !addingNext && hideForm()
     }, [onNewEntry, hideForm])
+
+    const FormComponent = recordType === RecordType.Incoming ? IncomingDataEntryForm : OutgoingDataEntryForm
 
     return (
         <Container>
@@ -35,12 +38,12 @@ export default function IncomingDataEntry({ onNewEntry }) {
             </Row>
             <Row>
                 <Collapse in={formIsVisible}>
-                    <div id="dtdFormContainer"
+                    <div id="formContainer"
                          className="border border-dark p-4 w-100 mt-2"
                          style={{ borderRadius: '4px' }}
                     >
                         <CloseButton onClose={hideForm} />
-                        <IncomingDataEntryForm onFormSubmit={onFormSubmit} />
+                        <FormComponent onFormSubmit={onFormSubmit} />
                     </div>
                 </Collapse>
             </Row>

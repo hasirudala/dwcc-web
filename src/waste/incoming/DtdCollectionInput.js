@@ -6,7 +6,7 @@ import { useFormikContext, FieldArray, ErrorMessage, Field } from 'formik'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import Select from 'react-select'
 import isEmpty from 'lodash/isEmpty'
-import { emptyDtdWaste } from '../schema'
+import { emptyDtdWaste } from './schema'
 import { defaultSelectStyle } from '../../common/cutomStyles'
 
 
