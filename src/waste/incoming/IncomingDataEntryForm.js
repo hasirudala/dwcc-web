@@ -3,6 +3,7 @@ import BsForm from 'react-bootstrap/Form'
 import { useFormikContext, Form, Formik } from 'formik'
 import isEmpty from 'lodash/isEmpty'
 import sumBy from 'lodash/sumBy'
+import every from 'lodash/every'
 
 import DateSelect from '../DateSelect'
 import DtdCollectionInputArray from './DtdCollectionInput'
@@ -86,8 +87,10 @@ function validate(values) {
         const totalCollected = sumBy(values.dtdCollection, c => c.quantity)
         const totalSegregated = sumBy(values.wasteItems, s => s.quantity)
         if (totalCollected < totalSegregated)
-            errors.form = 'Total collected waste cannot be less than total segregated waste'
+            errors.form = 'Total segregated waste cannot be more than total collected waste'
     }
+    if (every([values.dtdCollection, values.mixedWaste], isEmpty))
+        errors.form = 'At least one entry in either of "Door-to-door collection" or "Other Incoming Waste" must be present'
     return errors
 }
 

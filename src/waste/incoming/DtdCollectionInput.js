@@ -23,8 +23,6 @@ export default function DtdCollectionInputArray({ vehicleTypesMeta }) {
                         >
                             + ADD RECORD
                         </Button>
-                        <br/>
-                        <small className="text-danger">At least one entry required</small>
                     </Col>
                     :
                     dtdCollection.map((_, idx) =>

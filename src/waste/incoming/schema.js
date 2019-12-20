@@ -17,7 +17,7 @@ const schema = object({
             .required(REQUIRED)
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number')
-    })).required('At least one entry required'),
+    })),
     wasteItems: array().of(object({
         id: number(),
         itemId: number().required(REQUIRED),
