@@ -105,7 +105,7 @@ function MixedWasteInput({ idx, wasteItems, pushHelper, removeHelper, edit }) {
             <Col sm={2}>
                 <Field name={`mixedWaste[${idx}].rate`}
                        type="number"
-                       placeholder="Rate (₹)"
+                       placeholder="Purchase Rate (₹)"
                        as={BsForm.Control} />
                 <small className="text-danger">
                     <ErrorMessage name={`mixedWaste[${idx}].rate`} />

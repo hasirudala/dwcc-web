@@ -4,11 +4,11 @@ export function axiosErrorResponse(error, customMsg) {
         switch (status) {
             case 401:
             case 403:
-                return `${customMsg + ' // '} Authorization failed. Try again or contact administrator if this happens repeatedly.`
+                return `${customMsg ? customMsg + ' // ' : ''}Authorization failed. Try again or contact administrator if this happens repeatedly.`
             case 504:
-                return `${customMsg + ' // '} An external service didn't respond. Try again or hit REFRESH on your browser`
+                return `${customMsg ? customMsg + ' // ' : ''}An external service didn't respond. Try again or hit REFRESH on your browser`
             default:
-                return `${customMsg + ' // '} Something didn't go as expected.`
+                return `${customMsg ? customMsg + ' // ' : ''}Something didn't go as expected.`
         }
     }
 }

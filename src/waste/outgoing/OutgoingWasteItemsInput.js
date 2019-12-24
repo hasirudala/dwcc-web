@@ -78,7 +78,7 @@ function OutgoingWasteItemsInput({ idx, itemOptions, pushHelper, removeHelper })
             </Col>
             <Col sm={2}>
                 <Field name={`wasteItems[${idx}].rate`}
-                       placeholder="Rate (₹)"
+                       placeholder="Sale Rate (₹)"
                        type="number"
                        as={BsForm.Control}
                 />
