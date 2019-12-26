@@ -13,17 +13,23 @@ import Div50 from "../components/Div50"
 
 
 export const ListDwccs = (props) =>
-    <List {...props} bulkActionButtons={false} title="DWCCs">
+    <List {...props} bulkActionButtons={false} title="DWCCs" perPage={25}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField source="wardId" reference="wards" link="show" label="Ward">
+                <TextField source="name" />
+            </ReferenceField>
+            <ReferenceField source="ward.region.id" reference="regions" link="show" label="Region">
                 <TextField source="name" />
             </ReferenceField>
             <TextField source="ownerOrAgencyName" label="Owner/Agency Name" />
             <BooleanField source="ownedAndOperated" label="Owned and operated" />
             <DateField source="operatingSince" label="Operating since" />
             <NumberField source="areaInSqFt" label="Area in sq. ft." />
-            <BooleanField source="mouMoaSigned" label="MoU/MoA signed" />
+            <BooleanField source="mouSigned" label="MoU signed" />
+            <BooleanField source="moaSigned" label="MoA signed" />
+            <DateField source="dateMouSigned" label="MoU signed on" />
+            <DateField source="dateMouExpires" label="MoU expires on" />
             <EditButton />
         </Datagrid>
     </List>
@@ -34,6 +40,9 @@ export const ShowDwcc = (props) =>
         <SimpleShowLayout>
             <TextField source="name" />
             <ReferenceField source="wardId" reference="wards" link="show" label="Ward">
+                <TextField source="name" />
+            </ReferenceField>
+            <ReferenceField source="ward.region.id" reference="regions" link="show" label="Region">
                 <TextField source="name" />
             </ReferenceField>
             <TextField source="ownerOrAgencyName" label="Owner/Agency Name" />
@@ -78,6 +87,12 @@ const CreateEditForm = props =>
             <LineBreak n={2} />
             <NumberInput source="areaInSqFt" label="Area in sq. ft." fullWidth />
             <LineBreak n={2} />
-            <NullableBooleanInput source="mouMoaSigned" label="MoU/MoA signed" style={{ width: '100%' }} />
+            <NullableBooleanInput source="mouSigned" label="Is MoU signed?" style={{ width: '100%' }} />
+            <LineBreak n={2} />
+            <NullableBooleanInput source="moaSigned" label="Is MoA signed?" style={{ width: '100%' }} />
+            <LineBreak n={2} />
+            <DateInput source="dateMouSigned" label="MoU signed on?" validate={[dateNotInFuture()]} fullWidth />
+            <LineBreak n={2} />
+            <DateInput source="dateMouExpires" label="MoU expires on?" fullWidth />
         </Div50>
     </SimpleForm>

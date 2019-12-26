@@ -8,10 +8,9 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import { emptyWasteItem } from './schema'
 import isEmpty from 'lodash/isEmpty'
 import { defaultSelectStyle } from '../../common/cutomStyles'
-import SelectOrCreateBuyer from './SelectOrCreateBuyer'
 
 
-export default function OutgoingWasteItemsInputArray({ wasteItemsMeta }) {
+export default function OutgoingWasteItemsInputArray({ wasteItemsMeta, buyersMeta }) {
     const { values: { wasteItems } } = useFormikContext()
 
     return (
@@ -30,6 +29,7 @@ export default function OutgoingWasteItemsInputArray({ wasteItemsMeta }) {
                         <OutgoingWasteItemsInput key={idx}
                                                  idx={idx}
                                                  itemOptions={wasteItemsMeta}
+                                                 buyerOptions={buyersMeta}
                                                  pushHelper={arrayHelpers.push}
                                                  removeHelper={arrayHelpers.remove}
                         />
@@ -40,7 +40,7 @@ export default function OutgoingWasteItemsInputArray({ wasteItemsMeta }) {
 }
 
 
-function OutgoingWasteItemsInput({ idx, itemOptions, pushHelper, removeHelper }) {
+function OutgoingWasteItemsInput({ idx, itemOptions, buyerOptions, pushHelper, removeHelper }) {
     const { values: { wasteItems }, setFieldValue } = useFormikContext()
 
     return (
@@ -90,15 +90,21 @@ function OutgoingWasteItemsInput({ idx, itemOptions, pushHelper, removeHelper })
                 <Field name={`wasteItems[${idx}].buyerId`}>
                     {
                         ({ field }) =>
-                            <SelectOrCreateBuyer
-                                field={field}
-                                setFieldValue={setFieldValue}
-                                defaultVal={wasteItems[idx].buyer && wasteItems[idx].buyer}
+                            <Select placeholder="Buyer"
+                                    id={field.name}
+                                    options={buyerOptions}
+                                    getOptionLabel={option => option['name']}
+                                    getOptionValue={option => option['id']}
+                                    onChange={value => setFieldValue(field.name, value.id)}
+                                    onBlur={field.onBlur}
+                                    //value={field.value && buyerOptions.filter(option => option.id === field.value).pop()}
+                                    styles={defaultSelectStyle}
+                                    isSearchable
                             />
                     }
                 </Field>
                 <small className="text-danger">
-                    <ErrorMessage name={`wasteItems[${idx}].rate`} />
+                    <ErrorMessage name={`wasteItems[${idx}].buyerId`} />
                 </small>
             </Col>
             <Col sm={2}>

@@ -11,7 +11,7 @@ import MonthPicker from '../incoming/MonthPicker'
 import { RecordType } from '../constants'
 
 
-export default function WasteRecords({ recordType, records, forMonth, onMonthChange, onEdit }) {
+export default function RecordsList({ recordType, records, forMonth, onMonthChange, onEdit }) {
     const [currentEdit, setCurrentEdit] = React.useState(null)
 
     const closeEditEntryModal = React.useCallback(() => {

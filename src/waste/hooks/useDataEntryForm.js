@@ -2,12 +2,14 @@ import { useState, useCallback, useEffect } from 'react'
 import axios from 'axios/index'
 import { format } from 'date-fns'
 import { axiosErrorResponse} from '../../common/errors'
+import { RecordType } from '../constants'
 
 
-export default function useDataEntryForm(onFormSubmit, edit, existingRecord, recordType) {
+export default function useDataEntryForm(onFormSubmit, edit, existingRecord, recordType, dwcc) {
     const [addingNext, setAddingNext] = useState(false)
     const [wasteItems, setWasteItems] = useState(null)
     const [vehicleTypes, setVehicleTypes] = useState(null)
+    const [wasteBuyers, setWasteBuyers] = useState(null)
 
     const fetchWasteItems = useCallback(() => {
         axios
@@ -31,11 +33,28 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
             .catch(error => alert(axiosErrorResponse(error)))
     }, [setVehicleTypes])
 
+    const fetchBuyers = useCallback(() => {
+        axios
+            .get('/wasteBuyers/search/byRegion', {
+                params: {
+                    id: dwcc.ward.region.id,
+                    sort: 'name,ASC'
+                }
+            })
+            .then(({ data }) => setWasteBuyers(data._embedded.wasteBuyers))
+            .catch(error => alert(axiosErrorResponse(error)))
+    }, [setWasteBuyers, dwcc])
+
+    const fetchMeta = useCallback(() => {
+        fetchWasteItems()
+        if (recordType === RecordType.Incoming) fetchVehicleTypes()
+        if (recordType === RecordType.Outgoing) fetchBuyers()
+    }, [fetchWasteItems, fetchVehicleTypes, fetchBuyers, recordType])
+
     useEffect(() => {
-            if (!wasteItems) fetchWasteItems()
-            if (!vehicleTypes) fetchVehicleTypes()
+            fetchMeta()
         },
-        [wasteItems, vehicleTypes, fetchWasteItems, fetchVehicleTypes]
+        [fetchMeta]
     )
 
     const submitForm = useCallback((values, actions) => {
@@ -74,6 +93,7 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
     return {
         wasteItems,
         vehicleTypes,
+        wasteBuyers,
         setAddingNext,
         submitForm,
         deleteRecord

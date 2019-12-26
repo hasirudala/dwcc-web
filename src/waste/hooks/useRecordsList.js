@@ -1,47 +1,31 @@
-import { useState, useEffect, useCallback, useContext } from 'react'
-import isNil from 'lodash/isNil'
+import { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
-import { DwccContext } from '../../home/DwccContext'
 import remove from 'lodash/remove'
 
 
-export default function useRecordsList(recordType) {
-    const { dwcc } = useContext(DwccContext)
+export default function useRecordsList(dwcc, recordType) {
+    const [records, setRecords] = useState(null)
+    const [selectedMonth, setSelectedMonth] = useState(new Date())
 
-    const [state, setState] = useState({
-        dwcc0: dwcc,
-        records: null,
-        selectedMonth: new Date(), // current month by default
-    });
-
-    if (dwcc !== state.dwcc0) {
-        // this is to re-render the list on context change
-        setState(prevState => ({ ...prevState, dwcc0: dwcc, records: null }))
-    }
-
-    const setRecords = useCallback(records => {
-        setState(prevState => ({ ...prevState, records }))
-    }, [setState])
-
-    const fetchRecordsByMonthYear = useCallback(() => {
+    const fetchRecordsByMonthYear = useCallback((dwcc, selectedMonth) => {
         axios.get(`/${recordType}/search/getDwccRecordsByMonthYear`, {
                 params: {
-                    m: state.selectedMonth.getMonth() + 1,
-                    y: state.selectedMonth.getFullYear(),
+                    m: selectedMonth.getMonth() + 1,
+                    y: selectedMonth.getFullYear(),
                     dwccId: dwcc.id,
                     sort: 'date,ASC'
                 }
             })
             .then(({ data }) => setRecords(data._embedded[recordType]))
-    }, [state, dwcc, setRecords, recordType])
+    }, [setRecords, recordType])
 
     const handleMonthChange = useCallback(newDate => {
-        setState(prevState => ({ ...prevState, selectedMonth: newDate, records: null }))
-    }, [setState])
+        setSelectedMonth(newDate)
+    }, [setSelectedMonth])
 
     const handleUpdate = useCallback((entry, action) => {
-        if (new Date(entry.date).getMonth() === state.selectedMonth.getMonth()) {
-            let _records = state.records
+        if (new Date(entry.date).getMonth() === selectedMonth.getMonth()) {
+            let _records = records
             if (action) // i.e. edit or delete
                 remove(_records, rec => rec.id === entry.id)
             if (action !== 'delete') // edit or create
@@ -49,16 +33,14 @@ export default function useRecordsList(recordType) {
 
             setRecords(_records)
         }
-    }, [state, setRecords])
+    }, [records, selectedMonth, setRecords])
 
     useEffect(() => {
-        if (isNil(state.records)) {
-            fetchRecordsByMonthYear()
-        }
-    }, [state, fetchRecordsByMonthYear])
+        fetchRecordsByMonthYear(dwcc, selectedMonth)
+    }, [dwcc, selectedMonth, fetchRecordsByMonthYear])
 
     return {
-        state,
+        state: {records, selectedMonth},
         handleUpdate,
         handleMonthChange
     }

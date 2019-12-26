@@ -17,16 +17,17 @@ export default function OutgoingDataEntryForm({ onFormSubmit, edit, existingReco
     const { dwcc } = React.useContext(DwccContext)
     const {
         wasteItems,
+        wasteBuyers,
         setAddingNext,
         submitForm,
         deleteRecord
-    } = useDataEntryForm(onFormSubmit, edit, existingRecord, RecordType.Outgoing)
+    } = useDataEntryForm(onFormSubmit, edit, existingRecord, RecordType.Outgoing, dwcc)
 
     if (existingRecord)
         existingRecord.date = new Date(existingRecord.date)
 
     return (
-        wasteItems &&
+        wasteItems && wasteBuyers &&
         <Formik initialValues={edit ? existingRecord : getInitialValues(dwcc.id)}
                 validationSchema={schema}
                 onSubmit={submitForm}
@@ -38,7 +39,7 @@ export default function OutgoingDataEntryForm({ onFormSubmit, edit, existingReco
                 </BsForm.Row>
                 <BsForm.Row className={formSectionStyle}>
                     <FormSectionTitle title="Segregated Door-to-door Waste" />
-                    <OutgoingWasteItemsInputArray wasteItemsMeta={wasteItems} />
+                    <OutgoingWasteItemsInputArray wasteItemsMeta={wasteItems} buyersMeta={wasteBuyers} />
                 </BsForm.Row>
                 <BsForm.Row className={`${formSectionStyle} flex-column`}>
                     <NoteInput className="my-3" />
