@@ -21,7 +21,7 @@ export default function DtdCollectionInputArray({ vehicleTypesMeta }) {
                         <Button variant="outline-primary"
                                 onClick={() => arrayHelpers.push(emptyDtdWaste)}
                         >
-                            + ADD RECORD
+                            + Add Entry
                         </Button>
                     </Col>
                     :

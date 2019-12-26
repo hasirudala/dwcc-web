@@ -21,7 +21,7 @@ export default function ItemizedWasteInputArray({ wasteItemsMeta }) {
                         <Button variant="outline-primary"
                                 onClick={() => arrayHelpers.push(emptyWasteItem)}
                         >
-                            + ADD RECORD
+                            + Add Entry
                         </Button>
                     </Col>
                     :

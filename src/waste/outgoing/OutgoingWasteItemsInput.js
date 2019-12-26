@@ -21,7 +21,7 @@ export default function OutgoingWasteItemsInputArray({ wasteItemsMeta, buyersMet
                         <Button variant="outline-primary"
                                 onClick={() => arrayHelpers.push(emptyWasteItem)}
                         >
-                            + ADD RECORD
+                            + Add Entry
                         </Button>
                     </Col>
                     :
@@ -97,7 +97,6 @@ function OutgoingWasteItemsInput({ idx, itemOptions, buyerOptions, pushHelper, r
                                     getOptionValue={option => option['id']}
                                     onChange={value => setFieldValue(field.name, value.id)}
                                     onBlur={field.onBlur}
-                                    //value={field.value && buyerOptions.filter(option => option.id === field.value).pop()}
                                     styles={defaultSelectStyle}
                                     isSearchable
                             />

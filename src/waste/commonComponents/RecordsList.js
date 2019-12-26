@@ -6,7 +6,7 @@ import isNil from 'lodash/isNil'
 import { format } from 'date-fns'
 import ReportProblemIcon from '@material-ui/icons/ReportProblem'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import EditEntryModal from './EditEntryModal'
+import EditRecordModal from './EditRecordModal'
 import MonthPicker from '../incoming/MonthPicker'
 import { RecordType } from '../constants'
 
@@ -14,7 +14,7 @@ import { RecordType } from '../constants'
 export default function RecordsList({ recordType, records, forMonth, onMonthChange, onEdit }) {
     const [currentEdit, setCurrentEdit] = React.useState(null)
 
-    const closeEditEntryModal = React.useCallback(() => {
+    const closeEditRecordModal = React.useCallback(() => {
         setCurrentEdit(null)
     }, [setCurrentEdit])
 
@@ -33,7 +33,7 @@ export default function RecordsList({ recordType, records, forMonth, onMonthChan
                     <thead>
                     <tr>
                         <th>Date</th>
-                        { recordType === RecordType.Incoming && <th>Flags</th> }
+                        {recordType === RecordType.Incoming && <th>Flags</th>}
                         <th className="d-flex justify-content-end align-items-center">
                             <span className="font-weight-light">Filter</span> &nbsp;&nbsp;
                             <MonthPicker selectedMonth={forMonth} onMonthChange={onMonthChange} />
@@ -74,11 +74,11 @@ export default function RecordsList({ recordType, records, forMonth, onMonthChan
                     }
                     </tbody>
                 </Table>
-                <EditEntryModal showWhen={!isNil(currentEdit)}
-                                onClose={closeEditEntryModal}
-                                entryToEdit={currentEdit}
-                                onEdit={onEdit}
-                                recordType={recordType}
+                <EditRecordModal showWhen={!isNil(currentEdit)}
+                                 onClose={closeEditRecordModal}
+                                 entryToEdit={currentEdit}
+                                 onEdit={onEdit}
+                                 recordType={recordType}
                 />
             </>
     )

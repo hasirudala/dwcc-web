@@ -24,7 +24,7 @@ export default function MixedWasteInputArray({ edit, wasteItemsMeta }) {
                         <Button variant="outline-primary"
                                 onClick={() => arrayHelpers.push(emptyMixedWaste)}
                         >
-                            + ADD RECORD
+                            + Add Entry
                         </Button>
                     </Col>
                     :

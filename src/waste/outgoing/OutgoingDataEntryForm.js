@@ -64,7 +64,7 @@ export default function OutgoingDataEntryForm({ onFormSubmit, edit, existingReco
 function validate(values) {
     const errors = {}
     if (isEmpty(values.wasteItems))
-        errors.form = 'At least one record must be present'
+        errors.form = 'At least one entry must be present'
     return errors
 }
 

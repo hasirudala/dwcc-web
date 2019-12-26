@@ -9,7 +9,7 @@ import IncomingDataEntryForm from '../incoming/IncomingDataEntryForm'
 import OutgoingDataEntryForm from '../outgoing/OutgoingDataEntryForm'
 
 
-export default function EditEntryModal({ showWhen, onClose, entryToEdit, onEdit, recordType }) {
+export default function EditRecordModal({ showWhen, onClose, entryToEdit, onEdit, recordType }) {
     const [record, setRecord] = React.useState(null)
 
     React.useEffect(() => {

@@ -33,7 +33,7 @@ export default function DataEntry({ recordType, onNewEntry }) {
                         aria-expanded={formIsVisible}
                 >
                     <AddCircleOutlineIcon className="mr-2" />
-                    New entry
+                    New record
                 </Button>
             </Row>
             <Row>
