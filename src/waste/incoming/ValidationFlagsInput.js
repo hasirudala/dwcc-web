@@ -8,18 +8,20 @@ import { AuthContext } from '../../common/AuthContext'
 
 const hasNestedErrors = _errors => !every(_errors, isEmpty)
 
-export function ValidationFlagsInput() {
+export default function ValidationFlagsInput() {
     const { userInfo } = React.useContext(AuthContext)
     const { errors, values: { errorsIgnored, approvedByAdmin } } = useFormikContext()
     return (
-        (hasNestedErrors(errors) || errorsIgnored) &&
         <Col sm={3}>
-            <Field name="errorsIgnored"
-                   label="Ignore data validations"
-                   checked={errorsIgnored}
-                   as={BsForm.Check} />
             {
-                userInfo.isAdmin &&
+                (hasNestedErrors(errors) || errorsIgnored) &&
+                <Field name="errorsIgnored"
+                       label="Ignore data validations"
+                       checked={errorsIgnored}
+                       as={BsForm.Check} />
+            }
+            {
+                userInfo.isAdmin && (errorsIgnored || approvedByAdmin) &&
                 <Field name="approvedByAdmin"
                        label="Approved by Admin"
                        checked={approvedByAdmin}
@@ -27,19 +29,4 @@ export function ValidationFlagsInput() {
             }
         </Col>
     )
-}
-
-export function NoteInput() {
-    return (
-        <Col sm={6}>
-            <Field name="note">
-                {
-                    ({ field }) => (
-                        <BsForm.Control as="textarea" placeholder="Note (optional)" {...field} />
-                    )
-                }
-            </Field>
-        </Col>
-    )
-
 }

@@ -9,7 +9,8 @@ import DateSelect from '../DateSelect'
 import DtdCollectionInputArray from './DtdCollectionInput'
 import ItemizedWasteInputArray from './ItemizedWasteInput'
 import MixedWasteInputArray from './MixedWasteInput'
-import { ValidationFlagsInput, NoteInput } from '../commonComponents/DataEntryMetaInput'
+import ValidationFlagsInput from './ValidationFlagsInput'
+import NoteInput from '../commonComponents/NoteInput'
 import incomingSchema, { emptyDtdWaste, emptyWasteItem, emptyMixedWaste } from './schema'
 import { DwccContext } from '../../home/DwccContext'
 import useDataEntryForm from '../hooks/useDataEntryForm'
@@ -57,7 +58,8 @@ export default function IncomingDataEntryForm({ onFormSubmit, edit, existingReco
                 <BsForm.Row className={`${formSectionStyle} flex-column`}>
                     <FormErrors />
                     <ValidationFlagsInput />
-                    <NoteInput className="my-3" />
+                    <br/>
+                    <NoteInput />
                 </BsForm.Row>
                 <BsForm.Row className="pt-3">
                     <DataEntryButtonPanel edit={edit}

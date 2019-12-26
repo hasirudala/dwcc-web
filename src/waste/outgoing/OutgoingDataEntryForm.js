@@ -3,7 +3,7 @@ import BsForm from 'react-bootstrap/Form'
 import { Form, Formik } from 'formik'
 
 import DateSelect from '../DateSelect'
-import { NoteInput } from '../commonComponents/DataEntryMetaInput'
+import NoteInput from '../commonComponents/NoteInput'
 import { DwccContext } from '../../home/DwccContext'
 import useDataEntryForm from '../hooks/useDataEntryForm'
 import schema from './schema'
