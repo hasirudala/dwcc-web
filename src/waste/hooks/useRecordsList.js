@@ -7,7 +7,7 @@ export default function useRecordsList(dwcc, recordType) {
     const [records, setRecords] = useState(null)
     const [selectedMonth, setSelectedMonth] = useState(new Date())
 
-    const fetchRecordsByMonthYear = useCallback((dwcc, selectedMonth) => {
+    const fetchRecordsByMonthYear = useCallback((selectedMonth, dwcc) => {
         axios.get(`/${recordType}/search/getDwccRecordsByMonthYear`, {
                 params: {
                     m: selectedMonth.getMonth() + 1,
@@ -28,19 +28,21 @@ export default function useRecordsList(dwcc, recordType) {
             let _records = records
             if (action) // i.e. edit or delete
                 remove(_records, rec => rec.id === entry.id)
-            if (action !== 'delete') // edit or create
+            if (action !== 'delete') { // edit or create
                 _records.push(entry)
-
+                setRecords(null) // hack to force list refresh on new entry
+            }
             setRecords(_records)
         }
     }, [records, selectedMonth, setRecords])
 
     useEffect(() => {
-        fetchRecordsByMonthYear(dwcc, selectedMonth)
-    }, [dwcc, selectedMonth, fetchRecordsByMonthYear])
+        fetchRecordsByMonthYear(selectedMonth, dwcc)
+    }, [selectedMonth, dwcc, fetchRecordsByMonthYear])
 
     return {
-        state: {records, selectedMonth},
+        records,
+        selectedMonth,
         handleUpdate,
         handleMonthChange
     }

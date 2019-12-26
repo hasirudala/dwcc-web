@@ -11,6 +11,8 @@ import { formSectionStyle, FormSectionTitle } from '../commonComponents/FormSect
 import { RecordType } from '../constants'
 import OutgoingWasteItemsInputArray from './OutgoingWasteItemsInput'
 import DataEntryButtonPanel from '../commonComponents/DataEntryButtonPanel'
+import FormErrors from '../commonComponents/FormErrors'
+import isEmpty from 'lodash/isEmpty'
 
 
 export default function OutgoingDataEntryForm({ onFormSubmit, edit, existingRecord }) {
@@ -30,19 +32,22 @@ export default function OutgoingDataEntryForm({ onFormSubmit, edit, existingReco
         wasteItems && wasteBuyers &&
         <Formik initialValues={edit ? existingRecord : getInitialValues(dwcc.id)}
                 validationSchema={schema}
+                validate={validate}
                 onSubmit={submitForm}
                 enableReinitialize={true}
         >
             <Form autoComplete="off">
                 <BsForm.Row className="pb-3 border-bottom border-dark flex-column">
-                    <DateSelect />
+                    <DateSelect recordType={RecordType.Outgoing} edit={edit} />
                 </BsForm.Row>
                 <BsForm.Row className={formSectionStyle}>
                     <FormSectionTitle title="Segregated Door-to-door Waste" />
                     <OutgoingWasteItemsInputArray wasteItemsMeta={wasteItems} buyersMeta={wasteBuyers} />
                 </BsForm.Row>
                 <BsForm.Row className={`${formSectionStyle} flex-column`}>
-                    <NoteInput className="my-3" />
+                    <FormErrors />
+                    <br/>
+                    <NoteInput />
                 </BsForm.Row>
                 <BsForm.Row className="pt-3">
                     <DataEntryButtonPanel edit={edit}
@@ -55,6 +60,14 @@ export default function OutgoingDataEntryForm({ onFormSubmit, edit, existingReco
         </Formik>
     )
 }
+
+function validate(values) {
+    const errors = {}
+    if (isEmpty(values.wasteItems))
+        errors.form = 'At least one record must be present'
+    return errors
+}
+
 
 function getInitialValues(dwccId) {
     return {

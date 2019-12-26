@@ -1,6 +1,6 @@
 import React from 'react'
 import BsForm from 'react-bootstrap/Form'
-import { useFormikContext, Form, Formik } from 'formik'
+import { Form, Formik } from 'formik'
 import isEmpty from 'lodash/isEmpty'
 import sumBy from 'lodash/sumBy'
 import every from 'lodash/every'
@@ -9,6 +9,7 @@ import DateSelect from '../DateSelect'
 import DtdCollectionInputArray from './DtdCollectionInput'
 import ItemizedWasteInputArray from './ItemizedWasteInput'
 import MixedWasteInputArray from './MixedWasteInput'
+import FormErrors from '../commonComponents/FormErrors'
 import ValidationFlagsInput from './ValidationFlagsInput'
 import NoteInput from '../commonComponents/NoteInput'
 import incomingSchema, { emptyDtdWaste, emptyWasteItem, emptyMixedWaste } from './schema'
@@ -41,7 +42,7 @@ export default function IncomingDataEntryForm({ onFormSubmit, edit, existingReco
         >
             <Form autoComplete="off">
                 <BsForm.Row className="pb-3 border-bottom border-dark flex-column">
-                    <DateSelect />
+                    <DateSelect recordType={RecordType.Incoming} edit={edit} />
                 </BsForm.Row>
                 <BsForm.Row className={formSectionStyle}>
                     <FormSectionTitle title="Door-to-door collection" />
@@ -70,16 +71,6 @@ export default function IncomingDataEntryForm({ onFormSubmit, edit, existingReco
                 </BsForm.Row>
             </Form>
         </Formik>
-    )
-}
-
-function FormErrors() {
-    const { errors } = useFormikContext()
-    return (
-        !isEmpty(errors.form) &&
-        <div>
-            <span className="text-danger">{errors.form}</span>
-        </div>
     )
 }
 
