@@ -1,3 +1,7 @@
 .btn, .form-control {
     border-radius: 4px;
 }
+
+.breadcrumb {
+    background-color: inherit;
+}

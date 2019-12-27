@@ -7,7 +7,7 @@ import { format } from 'date-fns'
 import ReportProblemIcon from '@material-ui/icons/ReportProblem'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import EditRecordModal from './EditRecordModal'
-import MonthPicker from '../incoming/MonthPicker'
+import MonthPicker from './MonthPicker'
 import { RecordType } from '../constants'
 
 
