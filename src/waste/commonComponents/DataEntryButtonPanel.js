@@ -1,20 +1,31 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
+import LoaderButton from 'react-bootstrap-button-loader'
+import { useFormikContext } from 'formik'
+
 import { AuthContext } from '../../common/AuthContext'
 
 
 export default function DataEntryButtonPanel({edit, existingRecord, addNextFn, deleteFn}) {
     const { userInfo } = React.useContext(AuthContext)
+    const { isSubmitting } = useFormikContext()
     return (
         <>
-            <Button type="submit" variant={edit ? 'primary' : 'secondary'}>
+            <LoaderButton type="submit"
+                          loading={isSubmitting}
+                          variant={edit ? 'primary' : 'secondary'}
+            >
                 Save
-            </Button>
+            </LoaderButton>
             {
                 !edit &&
-                <Button type="submit" onClick={() => addNextFn(true)} className="ml-3">
+                <LoaderButton type="submit"
+                              onClick={() => addNextFn(true)}
+                              loading={isSubmitting}
+                              className="ml-3"
+                >
                     Save and add next
-                </Button>
+                </LoaderButton>
             }
             {
                 !edit &&

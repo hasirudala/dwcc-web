@@ -9,6 +9,7 @@ function useAuth(setAuthHeaderFn, unsetAuthHeaderFn) {
     const [state, setState] = useState({
         initializedGoogleAuth: false,
         isSignedIn: false,
+        isSigningIn: false,
         userInfo: {},
     })
 
@@ -30,7 +31,7 @@ function useAuth(setAuthHeaderFn, unsetAuthHeaderFn) {
 
     const setUserInfoAndSignedIn = useCallback(userInfo => {
         // set all state together to prevent re-renders
-        setState({ initializedGoogleAuth: true, userInfo, isSignedIn: true })
+        setState({ initializedGoogleAuth: true, userInfo, isSignedIn: true, isSigningIn: false })
     }, [setState])
 
     const onSuccessfulSignIn = useCallback((gAuthUser, onSuccessfulFetch) => {
@@ -38,12 +39,17 @@ function useAuth(setAuthHeaderFn, unsetAuthHeaderFn) {
         fetchUserInfo(onSuccessfulFetch).catch(signOut)
     }, [setAuthHeaderFn, signOut])
 
+    const setSigningIn = useCallback(bool =>
+        setState(prevState => ({ ...prevState, isSigningIn: bool }))
+    , [])
+
     const signIn = () => {
-        window.googleAuth
-        &&
-        window.googleAuth
-        .signIn({ prompt: 'select_account' })
-        .then(user => onSuccessfulSignIn(user, setUserInfoAndSignedIn))
+        if(window.googleAuth) {
+            setSigningIn(true)
+            window.googleAuth
+                .signIn({ prompt: 'select_account' })
+                .then(user => onSuccessfulSignIn(user, setUserInfoAndSignedIn))
+        }
     }
 
     const onInitAuthApi = useCallback(auth => {

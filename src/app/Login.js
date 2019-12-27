@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Button from 'react-bootstrap/Button'
+import LoaderButton from 'react-bootstrap-button-loader'
 
 import { AuthContext } from "../common/AuthContext"
 import btnGoogleSignIn from '../media/btn_google_signin.png'
@@ -14,8 +14,11 @@ const btnStyle = {
 }
 
 export default function Login() {
-    const { signIn } = useContext(AuthContext)
+    const { signIn, isSigningIn } = useContext(AuthContext)
     return (
-        <Button onClick={ signIn } style={btnStyle}/>
+        <LoaderButton onClick={signIn}
+                      loading={isSigningIn}
+                      style={btnStyle}
+        />
     )
 }
