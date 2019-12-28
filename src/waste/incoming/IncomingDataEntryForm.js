@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty'
 import sumBy from 'lodash/sumBy'
 import every from 'lodash/every'
 
-import DateSelect from '../DateSelect'
+import DateSelect from '../commonComponents/DateSelect'
 import DtdCollectionInputArray from './DtdCollectionInput'
 import ItemizedWasteInputArray from './ItemizedWasteInput'
 import MixedWasteInputArray from './MixedWasteInput'

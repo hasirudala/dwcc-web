@@ -39,7 +39,7 @@ export default function ItemizedWasteInputArray({ wasteItemsMeta }) {
 }
 
 function ItemizedWasteInput({ idx, itemOptions, pushHelper, removeHelper }) {
-    const { values: { wasteItems, errorsIgnored }, setFieldValue } = useFormikContext()
+    const { values: { wasteItems, errorsIgnored }, setFieldValue, errors } = useFormikContext()
     return (
         <BsForm.Row className="align-items-center mb-3">
             <Col sm={2}>
@@ -81,7 +81,7 @@ function ItemizedWasteInput({ idx, itemOptions, pushHelper, removeHelper }) {
                        validate={value => lessThanEqualToQty(value, wasteItems[idx].quantity, errorsIgnored)}
                 />
                 <small className="text-danger">
-                    <ErrorMessage name={`wasteItems[${idx}].rejectQuantity`} />
+                    {errors.wasteItems && errors.wasteItems[idx] && errors.wasteItems[idx].rejectQuantity}
                 </small>
             </Col>
             <Col sm={2}>

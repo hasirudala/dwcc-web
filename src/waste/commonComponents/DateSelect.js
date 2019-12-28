@@ -1,22 +1,31 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
 import { format } from 'date-fns'
-import { ErrorMessage, Field, useFormikContext } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import axios from 'axios'
-import { DwccContext } from '../home/DwccContext'
+import { DwccContext } from '../../home/DwccContext'
 
 
 export default function DateSelect({ recordType, edit }) {
-    const { setFieldValue, setFieldTouched } = useFormikContext()
+    const { setFieldValue, setFieldTouched, errors } = useFormikContext()
     const [blink, setBlink] = React.useState(false)
     const { dwcc } = React.useContext(DwccContext)
 
-    const blinkDate = () => {
+    const blinkDate = React.useCallback(() => {
         setTimeout(() => {
             setBlink(false)
         }, 2000)
         setBlink(true)
-    }
+    }, [setBlink])
+
+    const checkIfRecordExistsForDate = React.useCallback((date, recordType, dwcc) =>
+        axios.get(`/${recordType}/search/existsForDate`, {
+            params: {
+                date: format(date, 'yyyy-MM-dd'),
+                dwccId: dwcc.id
+            }
+        }), [])
+
 
     return (
         <>
@@ -42,16 +51,8 @@ export default function DateSelect({ recordType, edit }) {
                 }
             </Field>
             <small className="text-danger">
-                <ErrorMessage name="date" />
+                {errors.date}
             </small>
         </>
     )
 }
-
-const checkIfRecordExistsForDate = (date, recordType, dwcc) =>
-    axios.get(`/${recordType}/search/existsForDate`, {
-        params: {
-            date: format(date, 'yyyy-MM-dd'),
-            dwccId: dwcc.id
-        }
-    })
