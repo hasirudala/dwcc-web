@@ -7,7 +7,12 @@ import { AuthContext} from "../../common/AuthContext"
 
 const CustomLogoutButton = forwardRef((props, ref) => {
     const { signOut } = React.useContext(AuthContext)
-    const handleClick = () => signOut()
+
+    const handleClick = () => {
+        signOut()
+        window.location.replace('/')
+    }
+
     return (
         <MenuItem
             onClick={handleClick}
