@@ -12,7 +12,7 @@ import Div50 from "../components/Div50"
 
 
 export const ListUsers = (props) => (
-    <List {...props} bulkActionButtons={false}>
+    <List {...props} bulkActionButtons={false} perPage={25}>
         <Datagrid rowClick={() => false}>
             <TextField source="email" label="Login/email ID" />
             <TextField source="name" label="Name of person" />

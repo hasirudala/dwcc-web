@@ -12,7 +12,7 @@ import Div50 from "../components/Div50"
 
 
 export const ListWasteTags = (props) =>
-    <List {...props} bulkActionButtons={false} title="Waste Tags">
+    <List {...props} bulkActionButtons={false} title="Waste Tags" perPage={25}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField label="Type"

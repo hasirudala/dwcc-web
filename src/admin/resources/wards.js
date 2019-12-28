@@ -12,7 +12,7 @@ import Div50 from "../components/Div50"
 
 
 export const ListWards = (props) =>
-    <List {...props} bulkActionButtons={false}>
+    <List {...props} bulkActionButtons={false} perPage={25}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField source="regionId" reference="regions" link="show" label="Region">

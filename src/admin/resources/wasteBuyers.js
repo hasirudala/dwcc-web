@@ -12,7 +12,7 @@ import LineBreak from '../components/LineBreak'
 
 
 export const ListWasteBuyers = (props) =>
-    <List {...props} bulkActionButtons={false} title="Waste Buyers">
+    <List {...props} bulkActionButtons={false} title="Waste Buyers" perPage={25}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField source="regionId" reference="regions" link="show" label="Region">

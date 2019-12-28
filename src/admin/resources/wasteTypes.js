@@ -10,7 +10,7 @@ import Div50 from "../components/Div50"
 
 
 export const ListWasteTypes = (props) =>
-    <List {...props} bulkActionButtons={false} title="Waste Types">
+    <List {...props} bulkActionButtons={false} title="Waste Types" perPage={25}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <EditButton />
