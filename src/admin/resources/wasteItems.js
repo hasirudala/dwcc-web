@@ -100,6 +100,7 @@ const WasteTypeAndTagsInput = ({ formData, ...rest }) => {
             </ReferenceInput>
             <ReferenceArrayInput source="tagIds"
                                  reference="wasteTags"
+                                 resource="wasteItems"
                                  label="Tags"
                                  sort={{ field: 'name', order: 'ASC' }}
                                  {...rest}
