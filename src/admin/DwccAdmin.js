@@ -12,6 +12,7 @@ import CustomLayout from "./components/CustomLayout"
 import CustomLogoutButton from "./components/CustomLogoutButton"
 import { ListUsers, CreateUser, EditUser } from "./resources/users"
 import { CreateRegion, EditRegion, ListRegions, ShowRegion } from "./resources/regions"
+import { CreateZone, EditZone, ListZones, ShowZone } from "./resources/zones"
 import { CreateWard, EditWard, ListWards, ShowWard } from "./resources/wards"
 import { CreateDwcc, EditDwcc, ListDwccs, ShowDwcc } from "./resources/dwccs"
 import { CreateWasteType, EditWasteType, ListWasteTypes, ShowWasteType } from "./resources/wasteTypes"
@@ -53,6 +54,12 @@ export default class DwccAdmin extends React.Component {
                           create={CreateRegion}
                           edit={EditRegion}
                           show={ShowRegion}
+                />
+                <Resource name="zones"
+                          list={ListZones}
+                          create={CreateZone}
+                          edit={EditZone}
+                          show={ShowZone}
                 />
                 <Resource name="wards"
                           list={ListWards}

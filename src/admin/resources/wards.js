@@ -2,7 +2,8 @@ import React from "react"
 import {
     List, Datagrid, TextField, Create, Edit, SimpleForm, EditButton,
     TextInput, ReferenceInput, SelectInput, ReferenceField, Show,
-    SimpleShowLayout
+    SimpleShowLayout, ReferenceArrayField, SingleFieldList, ChipField,
+    FormDataConsumer, ReferenceArrayInput, SelectArrayInput
 } from 'react-admin'
 import { isRequired } from "../utils/validators"
 import LineBreak from '../components/LineBreak'
@@ -18,6 +19,14 @@ export const ListWards = (props) =>
             <ReferenceField source="regionId" reference="regions" link="show" label="Region">
                 <TextField source="name" />
             </ReferenceField>
+            <ReferenceArrayField label="Zones"
+                                 reference="zones"
+                                 source="zoneIds"
+            >
+                <SingleFieldList>
+                    <ChipField source="name" />
+                </SingleFieldList>
+            </ReferenceArrayField>
             <EditButton />
         </Datagrid>
     </List>
@@ -30,6 +39,14 @@ export const ShowWard = (props) =>
             <ReferenceField source="regionId" reference="regions" link="show" label="Region">
                 <TextField source="name" />
             </ReferenceField>
+            <ReferenceArrayField label="Zones"
+                                 reference="zones"
+                                 source="zoneIds"
+            >
+                <SingleFieldList>
+                    <ChipField source="name" />
+                </SingleFieldList>
+            </ReferenceArrayField>
         </SimpleShowLayout>
     </Show>
 
@@ -55,8 +72,44 @@ const CreateEditForm = props =>
         <Div50>
             <TextInput source="name" label="Name" validate={isRequired} fullWidth />
             <LineBreak n={3} />
-            <ReferenceInput label="Region" source="regionId" reference="regions">
-                <SelectInput optionText="name" validate={isRequired} fullWidth />
-            </ReferenceInput>
+            <FormDataConsumer>
+                {formDataProps => <RegionAndZonesInput { ...formDataProps } />}
+            </FormDataConsumer>
         </Div50>
     </SimpleForm>
+
+const RegionAndZonesInput = ({ formData, ...rest }) => {
+    return (
+        <>
+            <ReferenceInput label="Region"
+                            source="regionId"
+                            reference="regions"
+                            sort={{ field: 'name', order: 'ASC' }}
+                            {...rest}
+            >
+                <SelectInput optionText="name" validate={isRequired} optionValue="id" fullWidth resettable />
+            </ReferenceInput>
+            <ReferenceArrayInput source="zoneIds"
+                                 reference="zones"
+                                 resource="wards"
+                                 label="Zones"
+                                 sort={{ field: 'name', order: 'ASC' }}
+                                 {...rest}
+            >
+                <ZoneSelect linkedRegionId={formData.regionId} />
+            </ReferenceArrayInput>
+        </>
+    )
+}
+
+
+const ZoneSelect = ({ choices, linkedRegionId, ...props }) => {
+    const _choices = choices.filter(zone => zone.regionId === linkedRegionId)
+    return (
+        <SelectArrayInput optionText="name"
+                          choices={_choices}
+                          fullWidth
+                          {...props}
+        />
+    )
+}
