@@ -2,9 +2,13 @@ import React from "react"
 import {
     List, Datagrid, TextField, Create, Edit, SimpleForm, EditButton,
     TextInput, ReferenceInput, SelectInput, ReferenceField, Show,
-    SimpleShowLayout, BooleanField, NumberField, DateField, NullableBooleanInput,
-    DateInput, NumberInput
+    SimpleShowLayout, BooleanField, NumberField, DateField, BooleanInput,
+    DateInput, NumberInput, ReferenceArrayField, SingleFieldList, ChipField,
+    ShowButton, FormDataConsumer
 } from 'react-admin'
+import { useForm } from 'react-final-form'
+import addYears from 'date-fns/addYears'
+import formatISO from 'date-fns/formatISO'
 import { dateNotInFuture, isRequired } from "../utils/validators"
 import LineBreak from '../components/LineBreak'
 import ActionsWithBackButton from "../components/ActionsWithBackButton"
@@ -22,14 +26,16 @@ export const ListDwccs = (props) =>
             <ReferenceField source="ward.region.id" reference="regions" link="show" label="Region">
                 <TextField source="name" />
             </ReferenceField>
+            <ReferenceArrayField label="Zones"
+                                 reference="zones"
+                                 source="ward.zoneIds"
+            >
+                <SingleFieldList>
+                    <ChipField source="name" />
+                </SingleFieldList>
+            </ReferenceArrayField>
             <TextField source="ownerOrAgencyName" label="Owner/Agency Name" />
-            <BooleanField source="ownedAndOperated" label="Owned and operated" />
-            <DateField source="operatingSince" label="Operating since" />
-            <NumberField source="areaInSqFt" label="Area in sq. ft." />
-            <BooleanField source="mouSigned" label="MoU signed" />
-            <BooleanField source="moaSigned" label="MoA signed" />
-            <DateField source="dateMouSigned" label="MoU signed on" />
-            <DateField source="dateMouExpires" label="MoU expires on" />
+            <ShowButton />
             <EditButton />
         </Datagrid>
     </List>
@@ -45,11 +51,15 @@ export const ShowDwcc = (props) =>
             <ReferenceField source="ward.region.id" reference="regions" link="show" label="Region">
                 <TextField source="name" />
             </ReferenceField>
+            <TextField source="address" label="Address" />
             <TextField source="ownerOrAgencyName" label="Owner/Agency Name" />
-            <BooleanField source="ownedAndOperated" label="Owned and operated" />
             <DateField source="operatingSince" label="Operating since" />
             <NumberField source="areaInSqFt" label="Area in sq. ft." />
-            <BooleanField source="mouMoaSigned" label="MoU/MoA signed" />
+            <BooleanField source="ownedAndOperated" label="Owned and operated" />
+            <BooleanField source="moaSigned" label="MoA signed" />
+            <BooleanField source="mouSigned" label="MoU signed" />
+            <DateField source="dateMouSigned" label="MoU signed on" />
+            <DateField source="dateMouExpires" label="MoU expires on" />
         </SimpleShowLayout>
     </Show>
 
@@ -79,20 +89,60 @@ const CreateEditForm = props =>
                 <SelectInput optionText="name" validate={isRequired} fullWidth />
             </ReferenceInput>
             <LineBreak n={2} />
+            <TextInput source="address" label="Address" multiline fullWidth resettable options={{ rows: 3 }} />
             <TextInput source="ownerOrAgencyName" label="Owner/Agency Name" fullWidth />
             <LineBreak n={2} />
-            <NullableBooleanInput source="ownedAndOperated" label="Owned and operated" style={{ width: '100%' }} />
+            <DateInput source="operatingSince" label="Operating since" validate={[dateNotInFuture()]} />
             <LineBreak n={2} />
-            <DateInput source="operatingSince" label="Operating since" validate={[dateNotInFuture()]} fullWidth />
+            <NumberInput source="areaInSqFt" label="Area in sq. ft." />
             <LineBreak n={2} />
-            <NumberInput source="areaInSqFt" label="Area in sq. ft." fullWidth />
+            <BooleanInput source="ownedAndOperated" label="Owned and operated" />
             <LineBreak n={2} />
-            <NullableBooleanInput source="mouSigned" label="Is MoU signed?" style={{ width: '100%' }} />
+            <BooleanInput source="moaSigned" label="Is MoA signed?" />
             <LineBreak n={2} />
-            <NullableBooleanInput source="moaSigned" label="Is MoA signed?" style={{ width: '100%' }} />
-            <LineBreak n={2} />
-            <DateInput source="dateMouSigned" label="MoU signed on?" validate={[dateNotInFuture()]} fullWidth />
-            <LineBreak n={2} />
-            <DateInput source="dateMouExpires" label="MoU expires on?" fullWidth />
+            <FormDataConsumer>
+                {formDataProps => <MouInputs {...formDataProps} />}
+            </FormDataConsumer>
         </Div50>
     </SimpleForm>
+
+function MouInputs({ formData, ...rest }) {
+    const form = useForm()
+
+    return (
+        <>
+            <BooleanInput source="mouSigned"
+                          label="Is MoU signed?"
+                          onChange={value => {
+                              if (!value) {
+                                  form.change('dateMouSigned', null)
+                                  form.change('dateMouExpires', null)
+                              }
+                          }}
+                          style={{ width: '100%' }}
+                          {...rest}
+            />
+            <LineBreak n={2} />
+            {
+                formData.mouSigned &&
+                <>
+                    <DateInput source="dateMouSigned"
+                               label="MoU signed on?"
+                               validate={[dateNotInFuture()]}
+                               onChange={e => {
+                                   let value = e.target.value
+                                   if (value)
+                                       form.change('dateMouExpires',
+                                           formatISO(addYears(new Date(value), 3), { representation: 'date' }))
+                               }}
+                    />
+                    <LineBreak n={2} />
+                    <DateInput source="dateMouExpires"
+                               label="MoU expires on?"
+                               {...rest}
+                    />
+                </>
+            }
+        </>
+    )
+}
