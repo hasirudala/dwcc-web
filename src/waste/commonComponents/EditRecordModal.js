@@ -21,9 +21,8 @@ export default function EditRecordModal({ showWhen, onClose, entryToEdit, onEdit
 
     const handleClose = React.useCallback((updatedEntry, action) => {
         updatedEntry && onEdit(updatedEntry, action)
-        setRecord(null)
         onClose()
-    }, [onEdit, setRecord, onClose])
+    }, [onEdit, onClose])
 
     const FormComponent = recordType === RecordType.Incoming ? IncomingDataEntryForm : OutgoingDataEntryForm
 

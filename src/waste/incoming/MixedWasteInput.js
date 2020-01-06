@@ -66,10 +66,11 @@ function MixedWasteInput({ idx, wasteItems, pushHelper, removeHelper, edit }) {
     return (
         <BsForm.Row className="align-items-center mb-3">
             <Col sm={3}>
+                <BsForm.Label>Waste items</BsForm.Label>
                 <Field name={`mixedWaste[${idx}].itemIds`}>
                     {
                         ({ field }) => (
-                            <Select placeholder="Type of waste"
+                            <Select placeholder="Select"
                                     id={field.name}
                                     options={wasteItems}
                                     isMulti
@@ -94,24 +95,26 @@ function MixedWasteInput({ idx, wasteItems, pushHelper, removeHelper, edit }) {
                 </small>
             </Col>
             <Col sm={2}>
+                <BsForm.Label>Quantity</BsForm.Label>
                 <Field name={`mixedWaste[${idx}].quantity`}
                        type="number"
-                       placeholder="Quantity"
+                       placeholder="kgs"
                        as={BsForm.Control} />
                 <small className="text-danger">
                     <ErrorMessage name={`mixedWaste[${idx}].quantity`} />
                 </small>
             </Col>
             <Col sm={2}>
+                <BsForm.Label>Purchase rate</BsForm.Label>
                 <Field name={`mixedWaste[${idx}].rate`}
                        type="number"
-                       placeholder="Purchase Rate (₹)"
+                       placeholder="₹"
                        as={BsForm.Control} />
                 <small className="text-danger">
                     <ErrorMessage name={`mixedWaste[${idx}].rate`} />
                 </small>
             </Col>
-            <Col sm={2}>
+            <Col sm={2} className="pt-4">
                 <Button variant="link"
                         onClick={() => removeHelper(idx)}
                         tabIndex={idx + 10000}

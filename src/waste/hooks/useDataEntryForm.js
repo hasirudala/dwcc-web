@@ -67,6 +67,7 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
                 .catch(error => {
                     console.error(error.toJSON())
                     alert(axiosErrorResponse(error))
+                    actions.setSubmitting(false)
                 })
             :
             axios
@@ -79,6 +80,7 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
                 .catch(error => {
                     console.error(error.toJSON())
                     alert(axiosErrorResponse(error))
+                    actions.setSubmitting(false)
                 })
     }, [edit, existingRecord, onFormSubmit, addingNext, recordType])
 

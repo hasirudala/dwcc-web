@@ -45,6 +45,7 @@ function DtdCollectionInput({ idx, pushHelper, removeHelper, vehicleTypes }) {
     return (
         <BsForm.Row className="align-items-center mb-3">
             <Col sm={2}>
+                <BsForm.Label>Vehicle no.</BsForm.Label>
                 <Field name={`dtdCollection[${idx}].vehicleNumber`}
                        placeholder="Vehicle No."
                        as={BsForm.Control} />
@@ -53,10 +54,11 @@ function DtdCollectionInput({ idx, pushHelper, removeHelper, vehicleTypes }) {
                 </small>
             </Col>
             <Col sm={2}>
+                <BsForm.Label>Vehicle type</BsForm.Label>
                 <Field name={`dtdCollection[${idx}].vehicleTypeId`}>
                     {
                         ({ field }) => (
-                            <Select placeholder="Vehicle Type"
+                            <Select placeholder="Select"
                                     id={field.name}
                                     options={vehicleTypes}
                                     getOptionLabel={option => option['name']}
@@ -75,15 +77,36 @@ function DtdCollectionInput({ idx, pushHelper, removeHelper, vehicleTypes }) {
                 </small>
             </Col>
             <Col sm={2}>
+                <BsForm.Label>Waste quantity</BsForm.Label>
                 <Field name={`dtdCollection[${idx}].quantity`}
                        type="number"
-                       placeholder="Quantity"
+                       placeholder="kgs"
                        as={BsForm.Control} />
                 <small className="text-danger">
                     <ErrorMessage name={`dtdCollection[${idx}].quantity`} />
                 </small>
             </Col>
             <Col sm={2}>
+                <BsForm.Label>Reject</BsForm.Label>
+                <Field name={`dtdCollection[${idx}].rejectQty`}
+                       type="number"
+                       placeholder="kgs"
+                       as={BsForm.Control} />
+                <small className="text-danger">
+                    <ErrorMessage name={`dtdCollection[${idx}].rejectQty`} />
+                </small>
+            </Col>
+            <Col sm={2}>
+                <BsForm.Label>Sanitary</BsForm.Label>
+                <Field name={`dtdCollection[${idx}].sanitaryQty`}
+                       type="number"
+                       placeholder="kgs"
+                       as={BsForm.Control} />
+                <small className="text-danger">
+                    <ErrorMessage name={`dtdCollection[${idx}].sanitaryQty`} />
+                </small>
+            </Col>
+            <Col sm={2} className="pt-4">
                 <Button variant="link"
                         onClick={() => removeHelper(idx)}
                         tabIndex={idx + 10000}

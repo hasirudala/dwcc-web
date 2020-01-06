@@ -1,4 +1,4 @@
-import { object, date, array, number, string, boolean } from 'yup'
+import { object, date, array, number, string } from 'yup'
 
 const REQUIRED = 'Required'
 
@@ -16,8 +16,17 @@ const schema = object({
         quantity: number()
             .required(REQUIRED)
             .min(0, 'Must be at least 0')
+            .typeError('Enter valid number'),
+        rejectQty: number()
+            .required(REQUIRED)
+            .min(0, 'Must be at least 0')
+            .typeError('Enter valid number'),
+        sanitaryQty: number()
+            .required(REQUIRED)
+            .min(0, 'Must be at least 0')
             .typeError('Enter valid number')
-    })),
+
+    })), /* TO DELETE IN A MONTH OR SO, IF CONFIRMED NOT REQUIRED
     wasteItems: array().of(object({
         id: number(),
         itemId: number().required(REQUIRED),
@@ -30,7 +39,7 @@ const schema = object({
             .nullable()
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number')
-    })),
+    })),*/
     mixedWaste: array().of(object({
         id: number(),
         itemIds: array(number())
@@ -41,12 +50,12 @@ const schema = object({
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
         rate: number()
+            .nullable(true)
             .min(0, 'Must be at least 0')
-            .nullable()
             .typeError('Enter valid number'),
     })),
-    errorsIgnored: boolean().default(false),
-    approvedByAdmin: boolean().default(false),
+    //errorsIgnored: boolean().default(false),
+    //approvedByAdmin: boolean().default(false),
     note: string().nullable()
 })
 
@@ -55,7 +64,9 @@ export default schema
 export const emptyDtdWaste = {
     vehicleNumber: '',
     vehicleTypeId: '',
-    quantity: ''
+    quantity: '',
+    rejectQty: '',
+    sanitaryQty: ''
 }
 
 export const emptyWasteItem = {
@@ -67,5 +78,4 @@ export const emptyWasteItem = {
 export const emptyMixedWaste = {
     itemIds: [],
     quantity: '',
-    rate: ''
 }
