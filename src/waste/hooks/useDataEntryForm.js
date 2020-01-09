@@ -85,7 +85,13 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
     }, [edit, existingRecord, onFormSubmit, addingNext, recordType])
 
     const deleteRecord = useCallback((record) => {
-        if (window.confirm(`Record id #${record.id} of "${format(record.date, 'd MMM yyyy')}" will be DELETED. Continue?`))
+        if (window.confirm(
+            `Record id #${record.id} of "${
+                recordType === RecordType.Incoming ? 
+                    format(record.date, 'd MMM yyyy') 
+                    : format(record.fromDate, 'd MMM yyyy') + ' - ' + format(record.toDate, 'd MMM yyyy')   
+            }" will be DELETED. Continue?`
+        ))
             axios
                 .delete(`/${recordType}/${record.id}`)
                 .then(data => onFormSubmit(data.data, 'delete'))

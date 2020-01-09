@@ -78,4 +78,5 @@ export const emptyWasteItem = {
 export const emptyMixedWaste = {
     itemIds: [],
     quantity: '',
+    rate: ''
 }

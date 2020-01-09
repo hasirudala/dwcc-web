@@ -4,17 +4,39 @@ const REQUIRED = 'Required'
 
 const schema = object({
     id: number(),
-    date: date()
+    fromDate: date()
+        .required(REQUIRED)
+        .max(new Date())
+        .typeError('Invalid or NO date selected'),
+    toDate: date()
         .required(REQUIRED)
         .max(new Date())
         .typeError('Invalid or NO date selected'),
     dwccId: number().required(),
-    wasteItems: array().of(object({
+    totalQuantity: number()
+        .required(REQUIRED)
+        .min(0, 'Must be at least 0')
+        .typeError('Enter valid number'),
+    sanitaryWasteQuantity: number()
+        .min(0, 'Must be at least 0')
+        .nullable(true)
+        .typeError('Enter valid number'),
+    entries: array().of(object({
         id: number(),
-        itemId: number().required(REQUIRED),
+        itemIds: array(number())
+            .required(REQUIRED)
+            .typeError('At least one item must be selected'),
         quantity: number()
             .required(REQUIRED)
             .min(0, 'Must be at least 0')
+            .typeError('Enter valid number'),
+        rejectQuantity: number()
+            .min(0, 'Must be at least 0')
+            .nullable(true)
+            .typeError('Enter valid number'),
+        stockInHand: number()
+            .min(0, 'Must be at least 0')
+            .nullable(true)
             .typeError('Enter valid number'),
         rate: number()
             .required(REQUIRED)
@@ -27,9 +49,10 @@ const schema = object({
 
 export default schema
 
-export const emptyWasteItem = {
-    itemId: '',
+export const emptyEntry = {
+    itemIds: [],
     quantity: '',
-    rate: '',
-    buyerId: ''
+    rejectQuantity: '',
+    stockInHand: '',
+    rate: ''
 }

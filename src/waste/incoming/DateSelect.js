@@ -6,7 +6,7 @@ import axios from 'axios'
 import { DwccContext } from '../../home/DwccContext'
 
 
-export default function DateSelect({ recordType, edit }) {
+export default function DateSelect({ edit }) {
     const { setFieldValue, setFieldTouched, errors } = useFormikContext()
     const [blink, setBlink] = React.useState(false)
     const { dwcc } = React.useContext(DwccContext)
@@ -18,8 +18,8 @@ export default function DateSelect({ recordType, edit }) {
         setBlink(true)
     }, [setBlink])
 
-    const checkIfRecordExistsForDate = React.useCallback((date, recordType, dwcc) =>
-        axios.get(`/${recordType}/search/existsForDate`, {
+    const checkIfRecordExistsForDate = React.useCallback((date, dwcc) =>
+        axios.get('/incomingWaste/search/existsForDate', {
             params: {
                 date: format(date, 'yyyy-MM-dd'),
                 dwccId: dwcc.id
@@ -32,7 +32,7 @@ export default function DateSelect({ recordType, edit }) {
             <Field name="date" validate={
                 dateVal =>
                     dateVal && !edit &&
-                    checkIfRecordExistsForDate(dateVal, recordType, dwcc)
+                    checkIfRecordExistsForDate(dateVal, dwcc)
                         .then(({ data }) => data && "Entry already exists for this date")
             }>
                 {

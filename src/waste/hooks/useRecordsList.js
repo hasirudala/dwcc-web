@@ -24,7 +24,7 @@ export default function useRecordsList(dwcc, recordType) {
     }, [setSelectedMonth])
 
     const handleUpdate = useCallback((entry, action) => {
-        if (new Date(entry.date).getMonth() === selectedMonth.getMonth()) {
+        if (new Date(entry.date || entry.toDate).getMonth() === selectedMonth.getMonth()) {
             let _records = records
             if (action) // i.e. edit or delete
                 remove(_records, rec => rec.id === entry.id)

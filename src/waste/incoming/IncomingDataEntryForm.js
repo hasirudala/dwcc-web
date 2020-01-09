@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty'
 //import sumBy from 'lodash/sumBy'
 import every from 'lodash/every'
 
-import DateSelect from '../commonComponents/DateSelect'
+import DateSelect from './DateSelect'
 import DtdCollectionInputArray from './DtdCollectionInput'
 //import ItemizedWasteInputArray from './ItemizedWasteInput'
 import MixedWasteInputArray from './MixedWasteInput'
@@ -42,7 +42,7 @@ export default function IncomingDataEntryForm({ onFormSubmit, edit, existingReco
         >
             <Form autoComplete="off">
                 <BsForm.Row className="pb-3 border-bottom border-dark flex-column">
-                    <DateSelect recordType={RecordType.Incoming} edit={edit} />
+                    <DateSelect edit={edit} />
                 </BsForm.Row>
                 <BsForm.Row className={formSectionStyle}>
                     <FormSectionTitle title="Door-to-door collection" />

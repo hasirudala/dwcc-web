@@ -40,7 +40,7 @@ export default function EditRecordModal({ showWhen, onClose, entryToEdit, onEdit
                 <>
                     <Modal.Header closeButton style={{ backgroundColor: '#3B4E60' }}>
                         <Modal.Title className="d-flex align-items-center">
-                            Editing Record Id #{record.id}
+                            Editing Record ID #{record.id}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body  style={{ backgroundColor: '#2B3E50' }}>
