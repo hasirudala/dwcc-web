@@ -20,6 +20,9 @@ import { CreateWasteTag, EditWasteTag, ListWasteTags, ShowWasteTag } from "./res
 import { CreateWasteItem, EditWasteItem, ListWasteItems, ShowWasteItem } from "./resources/wasteItems"
 import { CreateVehicleType, EditVehicleType, ListVehicleTypes, ShowVehicleType } from "./resources/vehicleTypes"
 import { CreateWasteBuyer, EditWasteBuyer, ListWasteBuyers, ShowWasteBuyer } from './resources/wasteBuyers'
+import { CreateExpenseType, EditExpenseType, ListExpenseTypes, ShowExpenseType } from "./resources/expenseTypes"
+import { CreateExpenseTag, EditExpenseTag, ListExpenseTags, ShowExpenseTag } from "./resources/expenseTags"
+import { CreateExpenseItem, EditExpenseItem, ListExpenseItems, ShowExpenseItem } from "./resources/expenseItems"
 
 defaultMessages['ra']['boolean']['null'] = '?'
 const i18nProvider = polyglotI18nProvider(() => defaultMessages)
@@ -108,6 +111,27 @@ export default class DwccAdmin extends React.Component {
                           edit={EditWasteBuyer}
                           show={ShowWasteBuyer}
                           options={{ label: 'Waste Buyers' }}
+                />
+                <Resource name="expenseTypes"
+                          list={ListExpenseTypes}
+                          create={CreateExpenseType}
+                          edit={EditExpenseType}
+                          show={ShowExpenseType}
+                          options={{ label: 'Expense Types' }}
+                />
+                <Resource name="expenseTags"
+                          list={ListExpenseTags}
+                          create={CreateExpenseTag}
+                          edit={EditExpenseTag}
+                          show={ShowExpenseTag}
+                          options={{ label: 'Expense Tags' }}
+                />
+                <Resource name="expenseItems"
+                          list={ListExpenseItems}
+                          create={CreateExpenseItem}
+                          edit={EditExpenseItem}
+                          show={ShowExpenseItem}
+                          options={{ label: 'Expense Items' }}
                 />
             </Admin>
         )
