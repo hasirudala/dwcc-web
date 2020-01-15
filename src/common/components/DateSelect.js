@@ -1,12 +1,10 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
-import { format } from 'date-fns'
 import { Field, useFormikContext } from 'formik'
-import axios from 'axios'
 import { DwccContext } from '../../home/DwccContext'
 
 
-export default function DateSelect({ edit }) {
+export default function DateSelect({ edit, validatorFn }) {
     const { setFieldValue, setFieldTouched, errors } = useFormikContext()
     const [blink, setBlink] = React.useState(false)
     const { dwcc } = React.useContext(DwccContext)
@@ -18,21 +16,12 @@ export default function DateSelect({ edit }) {
         setBlink(true)
     }, [setBlink])
 
-    const checkIfRecordExistsForDate = React.useCallback((date, dwcc) =>
-        axios.get('/incomingWaste/search/existsForDate', {
-            params: {
-                date: format(date, 'yyyy-MM-dd'),
-                dwccId: dwcc.id
-            }
-        }), [])
-
-
     return (
         <>
             <Field name="date" validate={
                 dateVal =>
                     dateVal && !edit &&
-                    checkIfRecordExistsForDate(dateVal, dwcc)
+                    validatorFn(dateVal, dwcc)
                         .then(({ data }) => data && "Entry already exists for this date")
             }>
                 {

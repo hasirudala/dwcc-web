@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import LoaderButton from 'react-bootstrap-button-loader'
 import { useFormikContext } from 'formik'
 
-import { AuthContext } from '../../common/AuthContext'
+import { AuthContext } from '../AuthContext'
 
 
 export default function DataEntryButtonPanel({edit, existingRecord, addNextFn, deleteFn}) {

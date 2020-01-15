@@ -4,13 +4,11 @@ import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
-import IncomingDataEntryForm from '../incoming/IncomingDataEntryForm'
-import OutgoingDataEntryForm from '../outgoing/OutgoingDataEntryForm'
-import { RecordType } from '../../common/constants'
-import CloseButton from '../../common/components/FormCloseButton'
 
+import CloseButton from '../common/components/FormCloseButton'
+import ExpenseDataEntryForm from './ExpenseDataEntryForm'
 
-export default function DataEntry({ recordType, onNewEntry }) {
+export default function ExpenseDataEntry({ onNewEntry }) {
     const [formIsVisible, setFormVisible] = React.useState(false)
     const showForm = () => !formIsVisible && setFormVisible(true)
 
@@ -23,13 +21,11 @@ export default function DataEntry({ recordType, onNewEntry }) {
         !addingNext && hideForm()
     }, [onNewEntry, hideForm])
 
-    const FormComponent = recordType === RecordType.Incoming ? IncomingDataEntryForm : OutgoingDataEntryForm
-
     return (
         <Container>
             <Row className="d-flex justify-content-center">
                 <Button onClick={showForm}
-                        aria-controls="dtdFormContainer"
+                        aria-controls="expenseFormContainer"
                         aria-expanded={formIsVisible}
                 >
                     <AddCircleOutlineIcon className="mr-2" />
@@ -43,7 +39,7 @@ export default function DataEntry({ recordType, onNewEntry }) {
                          style={{ borderRadius: '4px' }}
                     >
                         <CloseButton onClose={hideForm} />
-                        <FormComponent onFormSubmit={onFormSubmit} />
+                        <ExpenseDataEntryForm onFormSubmit={onFormSubmit} />
                     </div>
                 </Collapse>
             </Row>

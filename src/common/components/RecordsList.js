@@ -2,18 +2,23 @@ import React from 'react'
 import Spinner from 'react-bootstrap/Spinner'
 import isNil from 'lodash/isNil'
 import EditRecordModal from './EditRecordModal'
-import { RecordType } from '../constants'
-import IncomingRecords from '../incoming/IncomingRecords'
-import OutgoingRecords from '../outgoing/OutgoingRecords'
 
-export default function RecordsList({ recordType, records, forMonth, onMonthChange, onEdit }) {
+
+export default function RecordsList(
+    {
+        recordType,
+        records,
+        forMonth,
+        onMonthChange,
+        onEdit,
+        ListComponent,
+        FormComponent
+    }) {
     const [currentEdit, setCurrentEdit] = React.useState(null)
 
     const closeEditRecordModal = React.useCallback(() => {
         setCurrentEdit(null)
     }, [setCurrentEdit])
-
-    const ListComponent = recordType === RecordType.Incoming ? IncomingRecords : OutgoingRecords
 
     return (
         isNil(records) ?
@@ -36,6 +41,7 @@ export default function RecordsList({ recordType, records, forMonth, onMonthChan
                                  entryToEdit={currentEdit}
                                  onEdit={onEdit}
                                  recordType={recordType}
+                                 FormComponent={FormComponent}
                 />
             </>
     )

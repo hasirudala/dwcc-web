@@ -4,12 +4,17 @@ import Container from 'react-bootstrap/Container'
 import Spinner from 'react-bootstrap/Spinner'
 import axios from 'axios'
 import isNil from 'lodash/isNil'
-import { RecordType } from '../constants'
-import IncomingDataEntryForm from '../incoming/IncomingDataEntryForm'
-import OutgoingDataEntryForm from '../outgoing/OutgoingDataEntryForm'
 
 
-export default function EditRecordModal({ showWhen, onClose, entryToEdit, onEdit, recordType }) {
+export default function EditRecordModal(
+    {
+        showWhen,
+        onClose,
+        entryToEdit,
+        onEdit,
+        recordType,
+        FormComponent
+    }) {
     const [record, setRecord] = React.useState(null)
 
     React.useEffect(() => {
@@ -23,8 +28,6 @@ export default function EditRecordModal({ showWhen, onClose, entryToEdit, onEdit
         updatedEntry && onEdit(updatedEntry, action)
         onClose()
     }, [onEdit, onClose])
-
-    const FormComponent = recordType === RecordType.Incoming ? IncomingDataEntryForm : OutgoingDataEntryForm
 
     return (
         <Modal show={showWhen} onHide={handleClose} onExit={handleClose} size="xl" scrollable>
@@ -43,7 +46,7 @@ export default function EditRecordModal({ showWhen, onClose, entryToEdit, onEdit
                             Editing Record ID #{record.id}
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body  style={{ backgroundColor: '#2B3E50' }}>
+                    <Modal.Body style={{ backgroundColor: '#2B3E50' }}>
                         <Container>
                             <FormComponent onFormSubmit={handleClose} edit existingRecord={record} />
                         </Container>

@@ -30,3 +30,9 @@ export const devAuthState = {
     signIn: () => {},
     signOut: () => {}
 }
+
+export const RecordType = Object.freeze({
+    Incoming: 'incomingWaste',
+    Outgoing: 'outgoingWaste',
+    Expense: 'expenses'
+})

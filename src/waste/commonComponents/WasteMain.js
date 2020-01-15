@@ -3,16 +3,16 @@ import Row from 'react-bootstrap/Row'
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import { LinkContainer } from 'react-router-bootstrap'
 
-import useRecordsList from '../hooks/useRecordsList'
-import SectionTitle from '../commonComponents/SectionTitle'
-import ShowingRecordsForMonth from '../commonComponents/ShowingRecordsForMonth'
-import RecordsList from './RecordsList'
+import useRecordsList from '../../common/hooks/useRecordsList'
+import SectionTitle from '../../common/components/SectionTitle'
+import ShowingRecordsForMonth from '../../common/components/ShowingRecordsForMonth'
+import RecordsList from '../../common/components/RecordsList'
 import DataEntry from './DataEntry'
 import { DwccContext } from '../../home/DwccContext'
-import { RecordType } from '../constants'
+import { RecordType } from '../../common/constants'
 
 
-export default function WasteMain({ recordType, title }) {
+export default function WasteMain({ recordType, title, ListComponent, FormComponent }) {
     const { dwcc } = React.useContext(DwccContext)
     const { records, selectedMonth, handleUpdate, handleMonthChange } = useRecordsList(dwcc, recordType)
     return (
@@ -37,6 +37,8 @@ export default function WasteMain({ recordType, title }) {
                          }
                          forMonth={selectedMonth}
                          onMonthChange={handleMonthChange}
+                         ListComponent={ListComponent}
+                         FormComponent={FormComponent}
             />
         </>
     )

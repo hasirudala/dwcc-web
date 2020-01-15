@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from 'react'
 import axios from 'axios/index'
 import { format } from 'date-fns'
-import { axiosErrorResponse} from '../../common/errors'
-import { RecordType } from '../constants'
+import { axiosErrorResponse} from '../common/errors'
+import { RecordType } from '../common/constants'
 
 
 export default function useDataEntryForm(onFormSubmit, edit, existingRecord, recordType, dwcc) {

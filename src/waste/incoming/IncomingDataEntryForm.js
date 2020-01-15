@@ -4,20 +4,22 @@ import { Form, Formik } from 'formik'
 import isEmpty from 'lodash/isEmpty'
 //import sumBy from 'lodash/sumBy'
 import every from 'lodash/every'
+import { format } from 'date-fns'
+import axios from 'axios/index'
 
-import DateSelect from './DateSelect'
+import DateSelect from '../../common/components/DateSelect'
 import DtdCollectionInputArray from './DtdCollectionInput'
 //import ItemizedWasteInputArray from './ItemizedWasteInput'
 import MixedWasteInputArray from './MixedWasteInput'
-import FormErrors from '../commonComponents/FormErrors'
+import FormErrors from '../../common/components/FormErrors'
 //import ValidationFlagsInput from './ValidationFlagsInput'
 import NoteInput from '../commonComponents/NoteInput'
 import incomingSchema, { emptyDtdWaste, /*emptyWasteItem,*/ emptyMixedWaste } from './schema'
 import { DwccContext } from '../../home/DwccContext'
-import useDataEntryForm from '../hooks/useDataEntryForm'
-import { formSectionStyle, FormSectionTitle } from '../commonComponents/FormSection'
-import { RecordType } from '../constants'
-import DataEntryButtonPanel from '../commonComponents/DataEntryButtonPanel'
+import useDataEntryForm from '../hooks'
+import { formSectionStyle, FormSectionTitle } from '../../common/components/FormSection'
+import { RecordType } from '../../common/constants'
+import DataEntryButtonPanel from '../../common/components/DataEntryButtonPanel'
 
 
 export default function IncomingDataEntryForm({ onFormSubmit, edit, existingRecord }) {
@@ -29,6 +31,14 @@ export default function IncomingDataEntryForm({ onFormSubmit, edit, existingReco
         submitForm,
         deleteRecord
     } = useDataEntryForm(onFormSubmit, edit, existingRecord, RecordType.Incoming)
+
+    const checkIfRecordExistsForDate = React.useCallback((date, dwcc) =>
+        axios.get('/incomingWaste/search/existsForDate', {
+            params: {
+                date: format(date, 'yyyy-MM-dd'),
+                dwccId: dwcc.id
+            }
+        }), [])
 
     if (existingRecord) existingRecord.date = new Date(existingRecord.date)
 
@@ -42,7 +52,7 @@ export default function IncomingDataEntryForm({ onFormSubmit, edit, existingReco
         >
             <Form autoComplete="off">
                 <BsForm.Row className="pb-3 border-bottom border-dark flex-column">
-                    <DateSelect edit={edit} />
+                    <DateSelect edit={edit} validatorFn={checkIfRecordExistsForDate} />
                 </BsForm.Row>
                 <BsForm.Row className={formSectionStyle}>
                     <FormSectionTitle title="Door-to-door collection" />

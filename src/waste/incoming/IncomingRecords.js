@@ -2,7 +2,7 @@ import React from 'react'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 import { format } from 'date-fns'
-import MonthPicker from '../commonComponents/MonthPicker'
+import MonthPicker from '../../common/components/MonthPicker'
 
 
 export default function IncomingRecords({ records, forMonth, onMonthChange, onEdit }) {

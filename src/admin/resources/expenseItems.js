@@ -58,7 +58,6 @@ export const ShowExpenseItem = (props) =>
                 </SingleFieldList>
             </ReferenceArrayField>
             <BooleanField source="askNumberOfUnits" />
-            <TextField source="unitLabel" />
         </SimpleShowLayout>
     </Show>
 
@@ -88,10 +87,6 @@ const CreateEditForm = props =>
                 {formDataProps => <ExpenseTypeAndTagsInput {...formDataProps} />}
             </FormDataConsumer>
             <BooleanInput source="askNumberOfUnits" label="Ask number of item-units during data entry" />
-            <TextInput source="unitLabel"
-                       label="Plural unit label"
-                       helperText="eg. 'sorters', 'cups' etc."
-            />
         </Div50>
     </SimpleForm>
 

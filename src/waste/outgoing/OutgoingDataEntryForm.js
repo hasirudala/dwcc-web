@@ -9,13 +9,13 @@ import axios from 'axios/index'
 import DateRangeSelect from './DateRangeSelect'
 import NoteInput from '../commonComponents/NoteInput'
 import { DwccContext } from '../../home/DwccContext'
-import useDataEntryForm from '../hooks/useDataEntryForm'
+import useDataEntryForm from '../hooks'
 import schema from './schema'
-import { formSectionStyle, FormSectionTitle } from '../commonComponents/FormSection'
-import { RecordType } from '../constants'
+import { formSectionStyle, FormSectionTitle } from '../../common/components/FormSection'
+import { RecordType } from '../../common/constants'
 import OutgoingEntriesInputArray from './OutgoingEntriesInput'
-import DataEntryButtonPanel from '../commonComponents/DataEntryButtonPanel'
-import FormErrors from '../commonComponents/FormErrors'
+import DataEntryButtonPanel from '../../common/components/DataEntryButtonPanel'
+import FormErrors from '../../common/components/FormErrors'
 
 
 export default function OutgoingDataEntryForm({ onFormSubmit, edit, existingRecord }) {

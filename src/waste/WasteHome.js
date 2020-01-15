@@ -26,14 +26,14 @@ export default function WasteHome() {
                     <Col xs={12} sm={6} className={colStyle}>
                         <div className={boxStyle} style={{ textAlign: 'center' }}>
                             <Link to="/waste/incoming">
-                                <h2 className="text-light">Incoming waste</h2>
+                                <h2>Incoming waste</h2>
                             </Link>
                         </div>
                     </Col>
                     <Col xs={12} sm={6} className={colStyle}>
                         <div className={boxStyle}>
                             <Link to="/waste/outgoing">
-                                <h2 className="text-light">Outgoing/sold waste</h2>
+                                <h2>Outgoing/sold waste</h2>
                             </Link>
                         </div>
                     </Col>

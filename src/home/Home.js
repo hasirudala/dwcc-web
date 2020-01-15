@@ -11,6 +11,7 @@ import DwccSelectionModal from './DwccSelectionModal'
 import ActiveDwccWithChanger from './ActiveDwccWithChanger'
 import { DwccContext } from './DwccContext'
 import WasteHome from '../waste/WasteHome'
+import ExpensesHome from '../expenses/ExpensesHome'
 
 
 const navContainer = "d-flex justify-content-end align-items-center"
@@ -54,32 +55,25 @@ export default function Home() {
                     </Col>
                 </Row>
                 <Route exact path="/">
-                    <Row>
+                    <Row className="mt-5">
                         <Col xs={12} sm={6} className={colStyle}>
                             <div className={boxStyle} style={{ textAlign: 'center' }}>
                                 <Link to="/waste">
-                                    <h2 className="text-light">Incoming, <br /> Outgoing <br /> Waste</h2>
+                                    <h2>Incoming, <br /> Outgoing <br /> Waste</h2>
                                 </Link>
                             </div>
                         </Col>
                         <Col xs={12} sm={6} className={colStyle}>
                             <div className={boxStyle}>
-                                <h2 className="text-light">Expenses</h2>
-                            </div>
-                        </Col>
-                        <Col xs={12} sm={6} className={colStyle}>
-                            <div className={boxStyle}>
-                                <h2 className="text-light">Attendance</h2>
-                            </div>
-                        </Col>
-                        <Col xs={12} sm={6} className={colStyle}>
-                            <div className={boxStyle}>
-                                <h2 className="text-light">Staff & Assets</h2>
+                                <Link to="/expenses">
+                                    <h2>Expenses</h2>
+                                </Link>
                             </div>
                         </Col>
                     </Row>
                 </Route>
                 <Route path="/waste" component={WasteHome} />
+                <Route path="/expenses" component={ExpensesHome} />
             </Container>
         </DwccContext.Provider>
     )
