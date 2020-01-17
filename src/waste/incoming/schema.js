@@ -49,6 +49,10 @@ const schema = object({
             .required(REQUIRED)
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
+        rejectQty: number()
+            .required(REQUIRED)
+            .min(0, 'Must be at least 0')
+            .typeError('Enter valid number'),
         rate: number()
             .nullable(true)
             .min(0, 'Must be at least 0')
@@ -78,5 +82,6 @@ export const emptyWasteItem = {
 export const emptyMixedWaste = {
     itemIds: [],
     quantity: '',
+    rejectQty: '',
     rate: ''
 }

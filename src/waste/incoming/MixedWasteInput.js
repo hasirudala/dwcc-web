@@ -105,6 +105,16 @@ function MixedWasteInput({ idx, wasteItems, pushHelper, removeHelper, edit }) {
                 </small>
             </Col>
             <Col sm={2}>
+                <BsForm.Label>Reject</BsForm.Label>
+                <Field name={`mixedWaste[${idx}].rejectQty`}
+                       type="number"
+                       placeholder="kgs"
+                       as={BsForm.Control} />
+                <small className="text-danger">
+                    <ErrorMessage name={`mixedWaste[${idx}].rejectQty`} />
+                </small>
+            </Col>
+            <Col sm={2}>
                 <BsForm.Label>Purchase rate</BsForm.Label>
                 <Field name={`mixedWaste[${idx}].rate`}
                        type="number"
