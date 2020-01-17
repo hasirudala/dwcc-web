@@ -8,9 +8,11 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import { defaultSelectStyle } from '../common/cutomStyles'
 import { emptyPurchaseEntry } from './schema'
 import isEmpty from 'lodash/isEmpty'
+import includes from 'lodash/includes'
+import isNil from 'lodash/isNil'
 
 
-export default function ExpensePurchaseInputArray({ wasteItemsMeta }) {
+export default function ExpensePurchaseInputArray({ wasteItemsMeta, edit }) {
     const { values: { purchaseEntries } } = useFormikContext()
     return (
         <FieldArray name="purchaseEntries">
@@ -30,6 +32,7 @@ export default function ExpensePurchaseInputArray({ wasteItemsMeta }) {
                                               itemOptions={wasteItemsMeta}
                                               pushHelper={arrayHelpers.push}
                                               removeHelper={arrayHelpers.remove}
+                                              edit={edit}
                         />
                     )
             )}
@@ -37,31 +40,55 @@ export default function ExpensePurchaseInputArray({ wasteItemsMeta }) {
     )
 }
 
-function ExpensePurchaseInput({ idx, itemOptions, pushHelper, removeHelper }) {
+function ExpensePurchaseInput({ idx, itemOptions, pushHelper, removeHelper, edit }) {
     const { values: { purchaseEntries }, setFieldValue } = useFormikContext()
+
+    const handleSelectChange = React.useCallback((value, action, fieldName, fieldValue) => {
+        switch (action) {
+            case 'select-option':
+                setFieldValue(fieldName, [value[value.length - 1].id, ...fieldValue])
+                return
+            case 'deselect-option':
+            case 'remove-value':
+                setFieldValue(fieldName, value ? [...value.map(val => val.id)] : [])
+                return
+            case 'clear':
+                setFieldValue(fieldName, [])
+                return
+            default:
+                return
+        }
+    }, [setFieldValue])
+
     return (
         <BsForm.Row className="align-items-center mb-3">
             <Col sm={2}>
-                <BsForm.Label>Waste Item</BsForm.Label>
-                <Field name={`purchaseEntries[${idx}].wasteItemId`}>
+                <BsForm.Label>Waste Item(s)</BsForm.Label>
+                <Field name={`purchaseEntries[${idx}].wasteItemIds`}>
                     {
                         ({ field }) => (
                             <Select placeholder="Select"
                                     id={field.name}
                                     options={itemOptions}
+                                    isMulti
+                                    isSearchable
                                     getOptionLabel={option => option['name']}
                                     getOptionValue={option => option['id']}
-                                    onChange={value => setFieldValue(field.name, value.id)}
+                                    onChange={
+                                        (value, { action }) =>
+                                            handleSelectChange(value, action, field.name, field.value)
+                                    }
                                     onBlur={field.onBlur}
-                                    value={field.value && itemOptions.filter(option => option.id === field.value).pop()}
+                                    value={itemOptions.filter(opt => includes(field.value, opt.id))}
                                     styles={defaultSelectStyle}
-                                    isSearchable
+                                    closeMenuOnSelect={false}
+                                    isDisabled={edit && !isNil(purchaseEntries[idx].id)}
                             />
                         )
                     }
                 </Field>
                 <small className="text-danger">
-                    <ErrorMessage name={`purchaseEntries[${idx}].wasteItemId`} />
+                    <ErrorMessage name={`purchaseEntries[${idx}].wasteItemIds`} />
                 </small>
             </Col>
             <Col sm={2}>

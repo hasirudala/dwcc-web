@@ -59,7 +59,7 @@ export default function ExpenseDataEntryForm({ onFormSubmit, edit, existingRecor
                 </BsForm.Row>
                 <BsForm.Row className="flex-column flex-nowrap pb-5 border-bottom border-dark">
                     <FormSectionTitle title="Purchased Waste" />
-                    <ExpensePurchaseInputArray wasteItemsMeta={wasteItems} />
+                    <ExpensePurchaseInputArray wasteItemsMeta={wasteItems} edit={edit} />
                 </BsForm.Row>
                 <BsForm.Row>
                     <FormErrors />

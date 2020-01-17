@@ -23,7 +23,9 @@ const schema = object({
     })),
     purchaseEntries: array().of(object({
         id: number(),
-        wasteItemId: number().required(REQUIRED),
+        wasteItemIds: array(number())
+            .required(REQUIRED)
+            .typeError('At least one item must be selected'),
         amount: number()
             .required(REQUIRED)
             .min(0, 'Must be at least 0')
@@ -34,6 +36,6 @@ const schema = object({
 export default schema
 
 export const emptyPurchaseEntry = {
-    wasteItemId: undefined,
-    amount: undefined
+    wasteItemIds: [],
+    amount: ''
 }
