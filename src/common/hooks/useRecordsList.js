@@ -13,7 +13,8 @@ export default function useRecordsList(dwcc, recordType) {
                     m: selectedMonth.getMonth() + 1,
                     y: selectedMonth.getFullYear(),
                     dwccId: dwcc.id,
-                    sort: 'date,ASC'
+                    sort: 'date,ASC',
+                    size: 32
                 }
             })
             .then(({ data }) => setRecords(data._embedded[recordType]))
