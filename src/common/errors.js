@@ -5,7 +5,7 @@ export function axiosErrorResponse(error, customMsg) {
             case 401:
             case 403:
                 return `${customMsg ? customMsg + ' // ' : ''}Authorization failed. 
-                Try signing out and logging again. If this problem continues, contact tech support.`
+                Try signing out and logging-in again. If this problem continues, contact tech support.`
             case 504:
                 return `${customMsg ? customMsg + ' // ' : ''}An external service didn't respond. Try again or hit REFRESH on your browser`
             default:
