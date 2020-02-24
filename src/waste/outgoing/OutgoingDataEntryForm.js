@@ -46,29 +46,39 @@ export default function OutgoingDataEntryForm({ onFormSubmit, edit, existingReco
                     <DateRangeSelect edit={edit} />
                 </BsForm.Row>
                 <BsForm.Row className="py-5 border-bottom border-dark">
-                    <Col sm={3}>
-                        <BsForm.Label>Total quantity</BsForm.Label>
+                    <Col sm={2}>
+                        <BsForm.Label>Total waste (kgs)</BsForm.Label>
                         <Field name="totalQuantity"
-                               placeholder="kgs"
+                               placeholder="0"
                                type="number"
                                as={BsForm.Control} />
                         <small className="text-danger">
                             <ErrorMessage name="totalQuantity" />
                         </small>
                     </Col>
-                    <Col sm={3}>
-                        <BsForm.Label>Sanitary waste quantity</BsForm.Label>
-                        <Field name="sanitaryWasteQuantity"
-                               placeholder="kgs"
+                    <Col sm={{ span: 2, offset: 1 }}>
+                        <BsForm.Label>Reject (kgs)</BsForm.Label>
+                        <Field name="rejectQuantity"
+                               placeholder="0"
                                type="number"
                                as={BsForm.Control} />
                         <small className="text-danger">
-                            <ErrorMessage name="sanitaryWasteQuantity" />
+                            <ErrorMessage name="rejectQuantity" />
+                        </small>
+                    </Col>
+                    <Col sm={{ span: 2, offset: 1 }}>
+                        <BsForm.Label>Sanitary waste (kgs)</BsForm.Label>
+                        <Field name="sanitaryQuantity"
+                               placeholder="0"
+                               type="number"
+                               as={BsForm.Control} />
+                        <small className="text-danger">
+                            <ErrorMessage name="sanitaryQuantity" />
                         </small>
                     </Col>
                 </BsForm.Row>
                 <BsForm.Row className={formSectionStyle}>
-                    <FormSectionTitle title="Segregated Waste" />
+                    <FormSectionTitle title="Outgoing Items Details" />
                     <OutgoingEntriesInputArray wasteItemsMeta={wasteItems}
                                                buyersMeta={wasteBuyers}
                                                edit={edit}
@@ -102,6 +112,12 @@ async function validate(values) {
             errors.toDate = "Entry already exists for this date range"
             : delete errors.toDate
     }
+
+    if (values.totalQuantity) {
+        let sumRejectSanitary = (values.rejectQuantity || 0) + (values.sanitaryQuantity || 0)
+        if (sumRejectSanitary > values.totalQuantity)
+            errors.totalQuantity = `Total cannot be less than reject + sanitary (= ${sumRejectSanitary} kgs)`
+    }
     return errors
 }
 
@@ -120,7 +136,7 @@ function getInitialValues(dwccId) {
         fromDate: null,
         toDate: null,
         totalQuantity: '',
-        sanitaryWasteQuantity: '',
+        sanitaryQuantity: '',
         entries: [],
         dwccId,
         note: ''

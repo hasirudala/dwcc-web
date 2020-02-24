@@ -104,16 +104,6 @@ function OutgoingEntryInput({ idx, itemOptions, buyerOptions, pushHelper, remove
                     <ErrorMessage name={`entries[${idx}].quantity`} />
                 </small>
             </Col>
-            <Col sm={1}>
-                <BsForm.Label>Reject</BsForm.Label>
-                <Field name={`entries[${idx}].rejectQuantity`}
-                       placeholder="kgs"
-                       type="number"
-                       as={BsForm.Control} />
-                <small className="text-danger">
-                    <ErrorMessage name={`entries[${idx}].rejectQuantity`} />
-                </small>
-            </Col>
             <Col sm={1} className="mr-3">
                 <BsForm.Label>Stock_In_Hand</BsForm.Label>
                 <Field name={`entries[${idx}].stockInHand`}

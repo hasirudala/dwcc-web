@@ -17,7 +17,11 @@ const schema = object({
         .required(REQUIRED)
         .min(0, 'Must be at least 0')
         .typeError('Enter valid number'),
-    sanitaryWasteQuantity: number()
+    rejectQuantity: number()
+        .min(0, 'Must be at least 0')
+        .nullable(true)
+        .typeError('Enter valid number'),
+    sanitaryQuantity: number()
         .min(0, 'Must be at least 0')
         .nullable(true)
         .typeError('Enter valid number'),
@@ -30,17 +34,13 @@ const schema = object({
             .required(REQUIRED)
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
-        rejectQuantity: number()
-            .min(0, 'Must be at least 0')
-            .nullable(true)
-            .typeError('Enter valid number'),
         stockInHand: number()
             .min(0, 'Must be at least 0')
             .nullable(true)
             .typeError('Enter valid number'),
         rate: number()
-            .required(REQUIRED)
             .min(0, 'Must be at least 0')
+            .nullable(true)
             .typeError('Enter valid number'),
         buyerId: number().nullable().notRequired(),
     })).required(REQUIRED),
