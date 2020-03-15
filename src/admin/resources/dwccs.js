@@ -85,7 +85,7 @@ const CreateEditForm = props =>
         <Div50>
             <TextInput source="name" label="Name" validate={isRequired} fullWidth />
             <LineBreak n={2} />
-            <ReferenceInput label="Ward" source="wardId" reference="wards">
+            <ReferenceInput label="Ward" source="wardId" reference="wards" perPage={100}>
                 <SelectInput optionText="name" validate={isRequired} fullWidth />
             </ReferenceInput>
             <LineBreak n={2} />

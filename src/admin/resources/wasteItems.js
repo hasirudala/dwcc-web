@@ -102,6 +102,7 @@ const WasteTypeAndTagsInput = ({ formData, ...rest }) => {
                                  reference="wasteTags"
                                  resource="wasteItems"
                                  label="Tags"
+                                 perPage={200}
                                  sort={{ field: 'name', order: 'ASC' }}
                                  {...rest}
             >
