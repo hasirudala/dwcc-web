@@ -18,28 +18,15 @@ const schema = object({
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
         rejectQty: number()
-            .required(REQUIRED)
+            .nullable(true)
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
         sanitaryQty: number()
-            .required(REQUIRED)
+            .nullable(true)
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number')
 
-    })), /* TO DELETE IN A MONTH OR SO, IF CONFIRMED NOT REQUIRED
-    wasteItems: array().of(object({
-        id: number(),
-        itemId: number().required(REQUIRED),
-        quantity: number()
-            .required(REQUIRED)
-            .min(0, 'Must be at least 0')
-            .typeError('Enter valid number'),
-        rejectQuantity: number()
-        //.required(REQUIRED)
-            .nullable()
-            .min(0, 'Must be at least 0')
-            .typeError('Enter valid number')
-    })),*/
+    })),
     mixedWaste: array().of(object({
         id: number(),
         itemIds: array(number())
@@ -50,7 +37,7 @@ const schema = object({
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
         rejectQty: number()
-            .required(REQUIRED)
+            .nullable(true)
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
         rate: number()
@@ -58,8 +45,6 @@ const schema = object({
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
     })),
-    //errorsIgnored: boolean().default(false),
-    //approvedByAdmin: boolean().default(false),
     note: string().nullable()
 })
 

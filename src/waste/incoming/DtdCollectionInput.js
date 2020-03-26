@@ -77,7 +77,7 @@ function DtdCollectionInput({ idx, pushHelper, removeHelper, vehicleTypes }) {
                 </small>
             </Col>
             <Col sm={2}>
-                <BsForm.Label>Waste quantity</BsForm.Label>
+                <BsForm.Label>Total Waste in Vehicle</BsForm.Label>
                 <Field name={`dtdCollection[${idx}].quantity`}
                        type="number"
                        placeholder="kgs"
