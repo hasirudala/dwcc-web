@@ -21,7 +21,7 @@ export default function ActiveDwccWithChanger({ activeDwcc, showDwccs }) {
             {
                 !isEmpty(activeDwcc) &&
                 <span className="text-muted">
-                    {activeDwcc.ward.name}, {activeDwcc.ward.region.name}
+                    Ward {activeDwcc.ward.name}, {activeDwcc.ward.region.name}
                 </span>
             }
         </>

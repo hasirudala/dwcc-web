@@ -27,7 +27,7 @@ export default function DwccSelectionModal({ show, handleClose, showClose }) {
     }
 
     const fetchDwccs = () =>
-        axios.get('/dwccs')
+        axios.get('/dwccs', { params: { 'size': 100 } })
             .then(({ data }) => setDwccs(data.content))
 
     return (
@@ -73,7 +73,7 @@ export default function DwccSelectionModal({ show, handleClose, showClose }) {
                                                         variant="link"
                                                         onClick={() => setDwcc(_dwcc)}
                                                 >
-                                                    {_dwcc.name}
+                                                    {`${_dwcc.name} (Ward ${_dwcc.ward.name})`}
                                                 </Button>
                                             )
                                         }
