@@ -4,7 +4,7 @@ import {
     TextInput, ReferenceInput, SelectInput, ReferenceField, Show,
     SimpleShowLayout, ReferenceArrayInput, SelectArrayInput,
     ReferenceArrayField, SingleFieldList, ChipField, FormDataConsumer,
-    BooleanField, BooleanInput, ShowButton
+    BooleanField, BooleanInput, ShowButton, Filter
 } from 'react-admin'
 import { isRequired } from "../utils/validators"
 import LineBreak from '../components/LineBreak'
@@ -13,8 +13,14 @@ import DefaultShowActions from "../components/DefaultShowActions"
 import Div50 from "../components/Div50"
 
 
+const ExpenseItemsFilter = props => (
+    <Filter {...props}>
+        <TextInput label="Search by item name" source="name" resettable alwaysOn />
+    </Filter>
+);
+
 export const ListExpenseItems = (props) =>
-    <List {...props} bulkActionButtons={false} title="Expense Items" perPage={25}>
+    <List {...props} bulkActionButtons={false} title="Expense Items" perPage={25} filters={<ExpenseItemsFilter/>}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField label="Type"

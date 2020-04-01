@@ -4,7 +4,7 @@ import {
     TextInput, ReferenceInput, SelectInput, ReferenceField, Show,
     SimpleShowLayout, BooleanField, NumberField, DateField, BooleanInput,
     DateInput, NumberInput, ReferenceArrayField, SingleFieldList, ChipField,
-    ShowButton, FormDataConsumer
+    ShowButton, FormDataConsumer, Filter
 } from 'react-admin'
 import { useForm } from 'react-final-form'
 import addYears from 'date-fns/addYears'
@@ -16,8 +16,15 @@ import DefaultShowActions from "../components/DefaultShowActions"
 import Div50 from "../components/Div50"
 
 
+const DwccFilter = props => (
+    <Filter {...props}>
+        <TextInput label="Search by DWCC name" source="name" resettable alwaysOn />
+    </Filter>
+);
+
+
 export const ListDwccs = (props) =>
-    <List {...props} bulkActionButtons={false} title="DWCCs" perPage={25}>
+    <List {...props} bulkActionButtons={false} title="DWCCs" perPage={25} filters={<DwccFilter/>}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField source="wardId" reference="wards" link="show" label="Ward">

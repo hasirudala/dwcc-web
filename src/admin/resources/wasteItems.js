@@ -2,7 +2,7 @@ import React from "react"
 import {
     List, Datagrid, TextField, Create, Edit, SimpleForm, EditButton,
     TextInput, ReferenceInput, SelectInput, ReferenceField, Show,
-    SimpleShowLayout, ReferenceArrayInput, SelectArrayInput,
+    SimpleShowLayout, ReferenceArrayInput, SelectArrayInput, Filter,
     ReferenceArrayField, SingleFieldList, ChipField, FormDataConsumer
 } from 'react-admin'
 import { isRequired } from "../utils/validators"
@@ -12,8 +12,14 @@ import DefaultShowActions from "../components/DefaultShowActions"
 import Div50 from "../components/Div50"
 
 
+const WasteItemsFilter = props => (
+    <Filter {...props}>
+        <TextInput label="Search by item name" source="name" resettable alwaysOn />
+    </Filter>
+);
+
 export const ListWasteItems = (props) =>
-    <List {...props} bulkActionButtons={false} title="Waste Items" perPage={25}>
+    <List {...props} bulkActionButtons={false} title="Waste Items" perPage={25} filters={<WasteItemsFilter/>}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField label="Type"

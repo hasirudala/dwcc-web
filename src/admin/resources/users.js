@@ -1,7 +1,7 @@
 import React from "react"
 import {
     List, Datagrid, TextField, FunctionField, Create, Edit, SimpleForm, EditButton,
-    TextInput, BooleanInput,
+    TextInput, BooleanInput, Filter
 } from 'react-admin'
 
 
@@ -11,8 +11,14 @@ import LineBreak from '../components/LineBreak'
 import Div50 from "../components/Div50"
 
 
+const UsersFilter = props => (
+    <Filter {...props}>
+        <TextInput label="Search by email" source="email" resettable alwaysOn />
+    </Filter>
+);
+
 export const ListUsers = (props) => (
-    <List {...props} bulkActionButtons={false} perPage={25}>
+    <List {...props} bulkActionButtons={false} perPage={25} filters={<UsersFilter/>}>
         <Datagrid rowClick={() => false}>
             <TextField source="email" label="Login/email ID" />
             <TextField source="name" label="Name of person" />

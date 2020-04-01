@@ -3,7 +3,7 @@ import {
     List, Datagrid, TextField, Create, Edit, SimpleForm, EditButton,
     TextInput, ReferenceInput, SelectInput, ReferenceField, Show,
     SimpleShowLayout, ReferenceArrayField, SingleFieldList, ChipField,
-    FormDataConsumer, ReferenceArrayInput, SelectArrayInput
+    FormDataConsumer, ReferenceArrayInput, SelectArrayInput, Filter
 } from 'react-admin'
 import { isRequired } from "../utils/validators"
 import LineBreak from '../components/LineBreak'
@@ -12,8 +12,15 @@ import DefaultShowActions from "../components/DefaultShowActions"
 import Div50 from "../components/Div50"
 
 
+const WardFilter = props => (
+    <Filter {...props}>
+        <TextInput label="Search Wards" source="name" resettable alwaysOn />
+    </Filter>
+);
+
+
 export const ListWards = (props) =>
-    <List {...props} bulkActionButtons={false} perPage={25}>
+    <List {...props} bulkActionButtons={false} perPage={25} filters={<WardFilter/>}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField source="regionId" reference="regions" link="show" label="Region">

@@ -2,7 +2,7 @@ import React from "react"
 import {
     List, Datagrid, TextField, Create, Edit, SimpleForm, EditButton,
     TextInput, ReferenceInput, SelectInput, ReferenceField, Show,
-    SimpleShowLayout
+    SimpleShowLayout, Filter
 } from 'react-admin'
 import { isRequired } from "../utils/validators"
 import LineBreak from '../components/LineBreak'
@@ -11,8 +11,15 @@ import DefaultShowActions from "../components/DefaultShowActions"
 import Div50 from "../components/Div50"
 
 
+const WasteTagsFilter = props => (
+    <Filter {...props}>
+        <TextInput label="Search by tag name" source="name" resettable alwaysOn />
+    </Filter>
+);
+
+
 export const ListWasteTags = (props) =>
-    <List {...props} bulkActionButtons={false} title="Waste Tags" perPage={25}>
+    <List {...props} bulkActionButtons={false} title="Waste Tags" perPage={25} filters={<WasteTagsFilter/>}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField label="Type"

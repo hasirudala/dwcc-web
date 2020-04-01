@@ -4,7 +4,7 @@ import {
     TextInput, Show, SimpleShowLayout, ReferenceField, ReferenceInput,
     SelectInput, BooleanField, BooleanInput, ShowButton, ReferenceArrayField,
     SingleFieldList, ChipField, ReferenceArrayInput, SelectArrayInput,
-    FormDataConsumer
+    FormDataConsumer, Filter
 } from 'react-admin'
 import { isRequired } from "../utils/validators"
 import ActionsWithBackButton from "../components/ActionsWithBackButton"
@@ -13,8 +13,14 @@ import Div50 from "../components/Div50"
 import LineBreak from '../components/LineBreak'
 
 
+const WasteBuyersFilter = props => (
+    <Filter {...props}>
+        <TextInput label="Search by buyer name" source="name" resettable alwaysOn />
+    </Filter>
+);
+
 export const ListWasteBuyers = (props) =>
-    <List {...props} bulkActionButtons={false} title="Waste Buyers" perPage={25}>
+    <List {...props} bulkActionButtons={false} title="Waste Buyers" perPage={25} filters={<WasteBuyersFilter/>}>
         <Datagrid rowClick={() => false}>
             <TextField source="name" label="Name" />
             <ReferenceField source="regionId" reference="regions" link="show" label="Region">
