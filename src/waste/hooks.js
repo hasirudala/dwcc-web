@@ -9,6 +9,7 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
     const [addingNext, setAddingNext] = useState(false)
     const [wasteItems, setWasteItems] = useState(null)
     const [vehicleTypes, setVehicleTypes] = useState(null)
+    const [wasteSources, setWasteSources] = useState(null)
     const [wasteBuyers, setWasteBuyers] = useState(null)
 
     const fetchWasteItems = useCallback(() => {
@@ -34,6 +35,17 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
             .catch(error => alert(axiosErrorResponse(error)))
     }, [setVehicleTypes])
 
+    const fetchWasteSources = useCallback(() => {
+        axios
+            .get('/wasteSources', {
+                params: {
+                    sort: 'name,ASC'
+                }
+            })
+            .then(({ data }) => setWasteSources(data.content))
+            .catch(error => alert(axiosErrorResponse(error)))
+    }, [setWasteSources])
+
     const fetchBuyers = useCallback(() => {
         axios
             .get('/wasteBuyers/search/byRegion', {
@@ -49,9 +61,12 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
 
     const fetchMeta = useCallback(() => {
         fetchWasteItems()
-        if (recordType === RecordType.Incoming) fetchVehicleTypes()
+        if (recordType === RecordType.Incoming) {
+            fetchVehicleTypes()
+            fetchWasteSources()
+        }
         if (recordType === RecordType.Outgoing) fetchBuyers()
-    }, [fetchWasteItems, fetchVehicleTypes, fetchBuyers, recordType])
+    }, [fetchWasteItems, fetchVehicleTypes, fetchWasteSources, fetchBuyers, recordType])
 
     useEffect(() => {
             fetchMeta()
@@ -103,6 +118,7 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
     return {
         wasteItems,
         vehicleTypes,
+        wasteSources,
         wasteBuyers,
         setAddingNext,
         submitForm,

@@ -20,6 +20,7 @@ import { CreateWasteTag, EditWasteTag, ListWasteTags, ShowWasteTag } from "./res
 import { CreateWasteItem, EditWasteItem, ListWasteItems, ShowWasteItem } from "./resources/wasteItems"
 import { CreateVehicleType, EditVehicleType, ListVehicleTypes, ShowVehicleType } from "./resources/vehicleTypes"
 import { CreateWasteBuyer, EditWasteBuyer, ListWasteBuyers, ShowWasteBuyer } from './resources/wasteBuyers'
+import { CreateWasteSource, EditWasteSource, ListWasteSources, ShowWasteSource } from './resources/wasteSources'
 import { CreateExpenseType, EditExpenseType, ListExpenseTypes, ShowExpenseType } from "./resources/expenseTypes"
 import { CreateExpenseTag, EditExpenseTag, ListExpenseTags, ShowExpenseTag } from "./resources/expenseTags"
 import { CreateExpenseItem, EditExpenseItem, ListExpenseItems, ShowExpenseItem } from "./resources/expenseItems"
@@ -111,6 +112,13 @@ export default class DwccAdmin extends React.Component {
                           edit={EditWasteBuyer}
                           show={ShowWasteBuyer}
                           options={{ label: 'Waste Buyers' }}
+                />
+                <Resource name="wasteSources"
+                          list={ListWasteSources}
+                          create={CreateWasteSource}
+                          edit={EditWasteSource}
+                          show={ShowWasteSource}
+                          options={{ label: 'Waste Sources' }}
                 />
                 <Resource name="expenseTypes"
                           list={ListExpenseTypes}

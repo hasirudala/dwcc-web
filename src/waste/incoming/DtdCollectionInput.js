@@ -43,7 +43,7 @@ function DtdCollectionInput({ idx, pushHelper, removeHelper, vehicleTypes }) {
     const { values: { dtdCollection }, setFieldValue } = useFormikContext()
 
     return (
-        <BsForm.Row className="align-items-center mb-3">
+        <BsForm.Row className="align-items-center mb-3 pt-3 border-top border-dark">
             <Col sm={2}>
                 <BsForm.Label>Vehicle no.</BsForm.Label>
                 <Field name={`dtdCollection[${idx}].vehicleNumber`}

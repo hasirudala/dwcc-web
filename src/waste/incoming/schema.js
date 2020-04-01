@@ -40,10 +40,12 @@ const schema = object({
             .nullable(true)
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
+        sourceId: number().nullable(true).notRequired(),
         rate: number()
             .nullable(true)
             .min(0, 'Must be at least 0')
             .typeError('Enter valid number'),
+        billNumber: string().notRequired()
     })),
     note: string().nullable()
 })
@@ -56,12 +58,6 @@ export const emptyDtdWaste = {
     quantity: '',
     rejectQty: '',
     sanitaryQty: ''
-}
-
-export const emptyWasteItem = {
-    itemId: '',
-    quantity: '',
-    rejectQuantity: '',
 }
 
 export const emptyMixedWaste = {

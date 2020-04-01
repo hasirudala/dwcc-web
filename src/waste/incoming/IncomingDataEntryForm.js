@@ -24,6 +24,7 @@ export default function IncomingDataEntryForm({ onFormSubmit, edit, existingReco
     const {
         wasteItems,
         vehicleTypes,
+        wasteSources,
         setAddingNext,
         submitForm,
         deleteRecord
@@ -40,7 +41,7 @@ export default function IncomingDataEntryForm({ onFormSubmit, edit, existingReco
     if (existingRecord) existingRecord.date = new Date(existingRecord.date)
 
     return (
-        wasteItems && vehicleTypes &&
+        wasteItems && vehicleTypes && wasteSources &&
         <Formik initialValues={edit ? existingRecord : getInitialValues(dwcc.id)}
                 validationSchema={incomingSchema}
                 validate={validate}
@@ -57,7 +58,10 @@ export default function IncomingDataEntryForm({ onFormSubmit, edit, existingReco
                 </BsForm.Row>
                 <BsForm.Row className={formSectionStyle}>
                     <FormSectionTitle title="Other incoming / Dropped-off waste" />
-                    <MixedWasteInputArray wasteItemsMeta={wasteItems} edit={edit} />
+                    <MixedWasteInputArray wasteItemsMeta={wasteItems}
+                                          wasteSourcesMeta={wasteSources}
+                                          edit={edit}
+                    />
                 </BsForm.Row>
                 <BsForm.Row className={`${formSectionStyle} flex-column`}>
                     <FormErrors />
