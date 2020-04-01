@@ -14,7 +14,8 @@ export default function useExpenseEntryForm(onFormSubmit, edit, existingRecord) 
         axios
             .get('/expenseItems', {
                 params: {
-                    sort: 'name,ASC'
+                    sort: 'name,ASC',
+                    size: 300
                 }
             })
             .then(({ data }) => setExpenseItems(data.content))
@@ -25,7 +26,8 @@ export default function useExpenseEntryForm(onFormSubmit, edit, existingRecord) 
         axios
             .get('/wasteItems', {
                 params: {
-                    sort: 'name,ASC'
+                    sort: 'name,ASC',
+                    size: 300
                 }
             })
             .then(({ data }) => setWasteItems(data.content))

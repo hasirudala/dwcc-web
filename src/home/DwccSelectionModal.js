@@ -27,7 +27,7 @@ export default function DwccSelectionModal({ show, handleClose, showClose }) {
     }
 
     const fetchDwccs = () =>
-        axios.get('/dwccs', { params: { 'size': 100 } })
+        axios.get('/dwccs', { params: { 'size': 300 } })
             .then(({ data }) => setDwccs(data.content))
 
     return (

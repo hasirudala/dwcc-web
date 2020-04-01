@@ -15,7 +15,8 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
         axios
             .get('/wasteItems', {
                 params: {
-                    sort: 'name,ASC'
+                    sort: 'name,ASC',
+                    size: 300
                 }
             })
             .then(({ data }) => setWasteItems(data.content))
@@ -38,7 +39,8 @@ export default function useDataEntryForm(onFormSubmit, edit, existingRecord, rec
             .get('/wasteBuyers/search/byRegion', {
                 params: {
                     id: dwcc.ward.region.id,
-                    sort: 'name,ASC'
+                    sort: 'name,ASC',
+                    size: 300
                 }
             })
             .then(({ data }) => setWasteBuyers(data._embedded.wasteBuyers))
