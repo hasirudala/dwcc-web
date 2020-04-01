@@ -10,7 +10,7 @@ import DateRangeSelect from './DateRangeSelect'
 import NoteInput from '../commonComponents/NoteInput'
 import { DwccContext } from '../../home/DwccContext'
 import useDataEntryForm from '../hooks'
-import schema from './schema'
+import schema, { emptyEntry } from './schema'
 import { formSectionStyle, FormSectionTitle } from '../../common/components/FormSection'
 import { RecordType } from '../../common/constants'
 import OutgoingEntriesInputArray from './OutgoingEntriesInput'
@@ -47,16 +47,6 @@ export default function OutgoingDataEntryForm({ onFormSubmit, edit, existingReco
                 </BsForm.Row>
                 <BsForm.Row className="py-5 border-bottom border-dark">
                     <Col sm={2}>
-                        <BsForm.Label>Total waste (kgs)</BsForm.Label>
-                        <Field name="totalQuantity"
-                               placeholder="0"
-                               type="number"
-                               as={BsForm.Control} />
-                        <small className="text-danger">
-                            <ErrorMessage name="totalQuantity" />
-                        </small>
-                    </Col>
-                    <Col sm={{ span: 2, offset: 1 }}>
                         <BsForm.Label>Reject (kgs)</BsForm.Label>
                         <Field name="rejectQuantity"
                                placeholder="0"
@@ -113,11 +103,6 @@ async function validate(values) {
             : delete errors.toDate
     }
 
-    if (values.totalQuantity) {
-        let sumRejectSanitary = (values.rejectQuantity || 0) + (values.sanitaryQuantity || 0)
-        if (sumRejectSanitary > values.totalQuantity)
-            errors.totalQuantity = `Total cannot be less than reject + sanitary (= ${sumRejectSanitary} kgs)`
-    }
     return errors
 }
 
@@ -137,7 +122,7 @@ function getInitialValues(dwccId) {
         toDate: null,
         totalQuantity: '',
         sanitaryQuantity: '',
-        entries: [],
+        entries: [emptyEntry],
         dwccId,
         note: ''
     }

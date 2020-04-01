@@ -13,10 +13,6 @@ const schema = object({
         .max(new Date())
         .typeError('Invalid or NO date selected'),
     dwccId: number().required(),
-    totalQuantity: number()
-        .required(REQUIRED)
-        .min(0, 'Must be at least 0')
-        .typeError('Enter valid number'),
     rejectQuantity: number()
         .min(0, 'Must be at least 0')
         .nullable(true)
