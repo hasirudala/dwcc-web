@@ -112,6 +112,7 @@ const ExpenseTypeAndTagsInput = ({ formData, ...rest }) => {
                                  reference="expenseTags"
                                  resource="expenseItems"
                                  label="Tags"
+                                 perPage={200}
                                  sort={{ field: 'name', order: 'ASC' }}
                                  {...rest}
             >

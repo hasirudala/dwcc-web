@@ -100,6 +100,7 @@ const RegionAndZonesInput = ({ formData, ...rest }) => {
                                  reference="zones"
                                  resource="wards"
                                  label="Zones"
+                                 perPage={300}
                                  sort={{ field: 'name', order: 'ASC' }}
                                  {...rest}
             >

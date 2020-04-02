@@ -89,6 +89,7 @@ const CreateEditForm = props =>
             <ReferenceArrayInput source="acceptedItemIds"
                                  reference="wasteItems"
                                  label="Accepted Items"
+                                 perPage={300}
                                  sort={{ field: 'name', order: 'ASC' }}
             >
                 <SelectArrayInput optionText="name" fullWidth />
