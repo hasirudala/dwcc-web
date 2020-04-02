@@ -39,6 +39,13 @@ const schema = object({
             .nullable(true)
             .typeError('Enter valid number'),
         buyerId: number().nullable().notRequired(),
+        vehicleNumber: string().notRequired(),
+        weighbridgeSlipNumber: string().notRequired(),
+        invoiceNumber: string().notRequired(),
+        invoiceDate: date()
+            .notRequired()
+            .max(new Date())
+            .typeError('Invalid date selected')
     })).required(REQUIRED),
     note: string().nullable()
 })

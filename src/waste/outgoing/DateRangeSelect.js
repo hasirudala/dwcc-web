@@ -32,7 +32,7 @@ export default function DateSelect({ edit }) {
                                     maxDate={toDate || new Date()}
                                     dateFormat="d MMM yyyy, EEEE"
                                     isClearable
-                                    className={`text-success ${blink ? 'blink' : ''}`}
+                                    className={`text-success ${blink ? 'blink' : ''} large`}
                                     placeholderText="From date 📅" />
                 }
             </Field>
@@ -57,7 +57,7 @@ export default function DateSelect({ edit }) {
                                     onBlur={() => setFieldTouched('toDate', true)}
                                     dateFormat="d MMM yyyy, EEEE"
                                     isClearable
-                                    className={`text-success ${blink ? 'blink' : ''}`}
+                                    className={`text-success ${blink ? 'blink' : ''} large`}
                                     placeholderText="To date 📅" />
                 }
             </Field>

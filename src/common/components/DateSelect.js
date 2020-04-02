@@ -35,7 +35,7 @@ export default function DateSelect({ edit, validatorFn }) {
                                     maxDate={new Date()}
                                     dateFormat="d MMM yyyy, EEEE"
                                     isClearable
-                                    className={`text-success ${blink ? 'blink' : ''}`}
+                                    className={`text-success ${blink ? 'blink' : ''} large`}
                                     placeholderText="Select date 📅" />
                 }
             </Field>
